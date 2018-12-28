@@ -39,13 +39,16 @@
   "scripts": {
     "fs-extra": "7.0.1",
     "lint": "eslint ./src/**/*.js",
-    "test": "jest ./__tests__/*.spec.js --notify",
+    "test:full": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",
+    "test:unit": "jest ./__tests__/messenger.spec.js --reporters jest-dot-reporter --notify",
+    "test": "yarn run test:unit",
     "pre-commit": "echo \" ==> Supply pre-commit message\" || true"
   },
   "dependencies": {
     "chalk": "2.4.1",
     "dumper.js": "1.3.0",
     "fs-extra": "7.0.1",
+    "jest-dot-reporter": "1.0.7",
     "pad": "2.2.1",
     "repeating": "3.0.0",
     "strip-ansi": "5.0.0",
