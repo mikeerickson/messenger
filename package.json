@@ -1,6 +1,6 @@
 {
   "name": "@codedungeon/messenger",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "clean node console messaging and logging",
   "license": "MIT",
   "keywords": [
@@ -37,12 +37,15 @@
     }
   },
   "scripts": {
+    "bump": "yarn run bump:dev",
+    "bump:dev": "version-bump cli pre-release:dev",
+    "bump:patch": "version-bump cli patch",
+    "bump:minor": "version-bump cli minor",
     "lint": "eslint ./src/**/*.js",
     "test:full": "jest ./__tests__/*.spec.js --notify",
     "test:unit": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",
     "test": "yarn run test:unit",
-    "pre-commit": "echo \" ==> Supply pre-commit message\" || true",
-    "publish": "np --yolo"
+    "pre-commit": "echo \" ==> Supply pre-commit message\" || true"
   },
   "dependencies": {
     "chalk": "2.4.1",
