@@ -109,7 +109,8 @@ class Messenger {
   success(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.success + " " : "";
-    let output = `${colors.bgGreen.black(label)} ${colors.green(icon + msg)}`;
+    let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.green(icon + msg)}`;
+
     print(output);
     if (this !== undefined) {
       this.writeToLog("success", output);
