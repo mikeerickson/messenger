@@ -1,7 +1,9 @@
 {
   "name": "@codedungeon/messenger",
   "version": "0.0.1-dev.1",
+  "description": "node console messanging and logging",
+  "license": "MIT",
+  "keywords": ["node","console","log","error","success","warning","logger"],
   "main": "index.js",
-  "author": "Mike Erickson <codedungeon@gmail.com> (https://github.com/mikeerickson)",
-  "license": "MIT"
+  "author": "Mike Erickson <codedungeon@gmail.com> (https://github.com/mikeerickson)"
 }
