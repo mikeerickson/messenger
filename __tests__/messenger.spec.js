@@ -6,6 +6,7 @@ const {
   error,
   success,
   warning,
+  warn,
   important,
   info,
   notice,
@@ -136,6 +137,32 @@ describe(classLabel("Messenger Class"), () => {
     test("warning method should include icon", () => {
       let output = print.warning(message, "", true);
       expect(output).toContain(m.icons.warning);
+    });
+  });
+  describe.only(commandLabel("Warn"), () => {
+    test("warn static", () => {
+      expect(typeof warn).toBe("function");
+      warn(message);
+    });
+    test("warn class method", () => {
+      expect(typeof m.warn).toBe("function");
+    });
+    test("should return warn messasge", () => {
+      let output = print.warn(message);
+      expect(output).toContain(message);
+    });
+    test("warn method should return colored output", () => {
+      let output = print.warn(message);
+      expect(raw(output)).toContain("[33m");
+    });
+    test("warn method should return label", () => {
+      let output = print.warn(message, "TEST");
+      expect(output).toContain("TEST");
+      expect(raw(output)).toContain("[33m");
+    });
+    test("warn method should include icon", () => {
+      let output = print.warn(message, "", true);
+      expect(output).toContain(m.icons.warn);
     });
   });
   describe(commandLabel("Info"), () => {

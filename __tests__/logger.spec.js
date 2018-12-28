@@ -160,6 +160,22 @@ describe(classLabel("Logger"), () => {
         console.log(err);
       });
   });
+  test("should create `warn` entry", done => {
+    asyncLogger("warn", "warn entry")
+      .then(result => {
+        done();
+        fs.readFile(filename, "utf8")
+          .then(data => {
+            dataValidationRule("warn entry", data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
   test("should create `info` entry", done => {
     asyncLogger("info", "info entry")
       .then(result => {

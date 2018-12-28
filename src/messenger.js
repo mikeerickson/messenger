@@ -30,6 +30,7 @@ class Messenger {
       critical: "🚫",
       error: "✖",
       success: "✔",
+      warn: "⚠️",
       warning: "⚠️",
       info: "💡",
       important: "★",
@@ -133,6 +134,25 @@ class Messenger {
     print(output);
     if (this !== undefined) {
       this.writeToLog("warning", output);
+    }
+    return output;
+  }
+  /**
+   * warn
+   *
+   * @param {*} msg
+   * @param {string} [label=""]
+   * @param {boolean} [showIcon=false]
+   * @returns
+   * @memberof Messenger
+   */
+  warn(msg, label = "", showIcon = false) {
+    label = label ? " " + label + " " : "";
+    let icon = showIcon ? this.icons.warn + "  " : "";
+    let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
+    print(output);
+    if (this !== undefined) {
+      this.writeToLog("warn", output);
     }
     return output;
   }
@@ -411,6 +431,7 @@ exports.critical = new Messenger().critical;
 exports.error = new Messenger().error;
 exports.success = new Messenger().success;
 exports.warning = new Messenger().warning;
+exports.warn = new Messenger().warn;
 exports.important = new Messenger().important;
 exports.info = new Messenger().info;
 exports.notice = new Messenger().notice;

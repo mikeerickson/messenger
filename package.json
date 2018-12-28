@@ -45,7 +45,7 @@
     "test:full": "jest ./__tests__/*.spec.js --notify",
     "test:unit": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",
     "test": "yarn run test:unit",
-    "pre-commit": "echo \" ==> Supply pre-commit message\" || true"
+    "pre-commit": "yarn run test && yarn run lint"
   },
   "dependencies": {
     "chalk": "2.4.1",
