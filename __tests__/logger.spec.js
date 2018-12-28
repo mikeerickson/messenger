@@ -1,4 +1,5 @@
 const fs = require("fs-extra");
+const path = require("path");
 const Logger = require("../src/logger");
 const { classLabel } = require("./test-utils");
 
@@ -30,6 +31,12 @@ describe(classLabel("Logger"), () => {
     fs.unlink(filename);
     done();
   });
+  test("should validate existensce of `logs` direcotry", done => {
+    let result = fs.existsSync(path.dirname(logger.file));
+    expect(result).toEqual(true);
+    done();
+  });
+
   test("should create log file", done => {
     fs.exists(filename)
       .then(result => {

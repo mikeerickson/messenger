@@ -39,12 +39,12 @@ class Messenger {
       debug: "◼"
     };
   }
-  initLogger(logToFile = false, appName = "app") {
+  initLogger(logToFile = false, logDir = "logs", appName = "app") {
     this.logToFile = logToFile;
     this.appName = appName;
     this.methods = [];
     if (this.logToFile) {
-      this.logger = new Logger({ path: "logs", appName });
+      this.logger = new Logger({ path: logDir, appName });
       this.methods = this.logger.methods();
     }
   }

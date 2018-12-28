@@ -1,6 +1,8 @@
 /*eslint no-undef: 0*/
 
 const pad = require("pad");
+const os = require("os");
+const fs = require("fs-extra");
 
 /**
  * @param {object} options Options [optional]
@@ -8,6 +10,8 @@ const pad = require("pad");
  * @param {string} options.appName Desired log file appName [optional] Default: log
  */
 function Logger(options) {
+  // const path = require("path");
+
   let defOptions = { path: "logs", appName: "app" };
   options = Object.assign(defOptions, options);
 
@@ -16,19 +20,14 @@ function Logger(options) {
   };
 
   const dateStamp = (date = new Date()) => {
-    return (
-      date.getFullYear() +
-      "-" +
-      addZero(date.getMonth() + 1) +
-      "-" +
-      addZero(date.getDate())
-    );
+    return date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
   };
 
   let path = require("path");
-  let folder = options.path
-    ? path.resolve(path.normalize(options.path))
-    : path.resolve(__dirname);
+  let folder = options.path ? path.resolve(path.normalize(options.path)) : path.resolve(__dirname);
+  if (!fs.existsSync(folder)) {
+    fs.mkdirpSync(folder);
+  }
   let filename = options.appName + "-" + dateStamp() + ".log";
 
   Object.defineProperties(this, {
@@ -58,12 +57,7 @@ function Logger(options) {
   });
 }
 
-const formatDate = (
-  date = new Date(),
-  useAMPM = true,
-  showSeconds = true,
-  showMicro = false
-) => {
+const formatDate = (date = new Date(), useAMPM = true, showSeconds = true, showMicro = false) => {
   if (!useAMPM) {
     useAMPM = false;
   }
@@ -130,17 +124,7 @@ Logger.prototype.write = function(data) {
   });
 };
 Logger.prototype.methods = function() {
-  return [
-    "critical",
-    "error",
-    "warning",
-    "warn",
-    "success",
-    "info",
-    "important",
-    "notice",
-    "debug"
-  ];
+  return ["critical", "error", "warning", "warn", "success", "info", "important", "notice", "debug", "log"];
 };
 /**
  * Prints a critical log message

@@ -1,3 +1,6 @@
+const path = require("path");
+const fs = require("fs-extra");
+
 const {
   critical,
   error,
@@ -19,7 +22,7 @@ let { commandLabel, classLabel, repeat, raw } = require("./test-utils");
 const print = require("../src/messenger");
 
 // enable logger
-print.initLogger(true, "test");
+print.initLogger(true, "logs", "test");
 
 describe(classLabel("Messenger Class"), () => {
   let m, message;
@@ -320,6 +323,13 @@ describe(classLabel("Messenger Class"), () => {
     test("should return line messasge", () => {
       let output = print.line(message);
       expect(output).toContain(message);
+    });
+  });
+  describe(commandLabel("Logger"), () => {
+    test("logger directory exists", done => {
+      let result = fs.existsSync(path.dirname(print.logger.file));
+      expect(result).toBe(true);
+      done();
     });
   });
 });

@@ -37,12 +37,12 @@
     }
   },
   "scripts": {
-    "fs-extra": "7.0.1",
     "lint": "eslint ./src/**/*.js",
-    "test:full": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",
-    "test:unit": "jest ./__tests__/messenger.spec.js --reporters jest-dot-reporter --notify",
+    "test:full": "jest ./__tests__/*.spec.js --notify",
+    "test:unit": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",
     "test": "yarn run test:unit",
-    "pre-commit": "echo \" ==> Supply pre-commit message\" || true"
+    "pre-commit": "echo \" ==> Supply pre-commit message\" || true",
+    "publish": "np --yolo"
   },
   "dependencies": {
     "chalk": "2.4.1",
