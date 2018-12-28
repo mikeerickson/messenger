@@ -1,0 +1,7 @@
+{
+  "name": "@codedungeon/messenger",
+  "version": "0.0.1-dev.1",
+  "main": "index.js",
+  "author": "Mike Erickson <codedungeon@gmail.com> (https://github.com/mikeerickson)",
+  "license": "MIT"
+}
