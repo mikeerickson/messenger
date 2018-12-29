@@ -1,13 +1,45 @@
 const colors = require("chalk");
-const repeating = require("repeating");
-const windowSize = require("window-size");
-const { dd, dump } = require("dumper.js");
-const stripAnsi = require("strip-ansi");
 const Logger = require("./logger");
+const repeating = require("repeating");
+const stripAnsi = require("strip-ansi");
+const { dd, dump } = require("dumper.js");
 const pkgInfo = require("../package.json");
+let windowSize = require("window-size");
 
+// this is required when message executed in non terminal window
+// such as VSCode code runner
+if (windowSize === undefined) {
+  windowSize = { width: 100 };
+}
+/**
+ * print
+ *
+ * @param {string} [type=""]
+ * @param {*} args
+ * @memberof Messenger
+ */
 const print = args => {
   process.env.NODE_ENV === "test" ? null : console.log(args);
+};
+
+/**
+ * formatMessage
+ *
+ * @param {*} msg
+ * @returns
+ * @memberof Messenger
+ */
+const formatMessage = msg => {
+  let result = msg;
+  if (typeof msg === "object") {
+    if (Array.isArray(msg)) {
+      result = msg.toString().replace(/,/gi, " ");
+    } else {
+      result = JSON.stringify(msg);
+      result = result.replace(/,/gi, ", ").replace(/:/gi, ": ");
+    }
+  }
+  return result;
 };
 
 /**
@@ -33,7 +65,8 @@ class Messenger {
       success: "✔",
       warn: "⚠️",
       warning: "⚠️",
-      info: "💡",
+      info: "⌽",
+      info_alt: "💡",
       important: "★",
       status: "◯",
       notice: "◉",
@@ -42,10 +75,23 @@ class Messenger {
       debug: "◼"
     };
   }
-
+  /**
+   * version
+   *
+   * @returns
+   * @memberof Messenger
+   */
   version() {
     return pkgInfo.version;
   }
+  /**
+   * initLogger
+   *
+   * @param {boolean} [logToFile=false]
+   * @param {string} [logDir="logs"]
+   * @param {string} [appName="app"]
+   * @memberof Messenger
+   */
   initLogger(logToFile = false, logDir = "logs", appName = "app") {
     this.logToFile = logToFile;
     this.appName = appName;
@@ -55,7 +101,13 @@ class Messenger {
       this.methods = this.logger.methods();
     }
   }
-
+  /**
+   * writeToLog
+   *
+   * @param {string} [type=""]
+   * @param {*} args
+   * @memberof Messenger
+   */
   writeToLog(type = "", args) {
     if (this.logToFile) {
       if (this.methods.includes(type)) {
@@ -75,6 +127,7 @@ class Messenger {
   critical(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.critical + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgKeyword("orangered").black(label)}${label ? " " : ""}${icon}${colors.keyword(
       "orangered"
     )(msg)}`;
@@ -97,6 +150,7 @@ class Messenger {
   error(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.error + " " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgRed.black(label)}${label ? " " : ""}${colors.red(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -116,7 +170,8 @@ class Messenger {
   success(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.success + " " : "";
-    let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.green(icon + msg)}`;
+    msg = formatMessage(msg);
+    let output = `${colors.bgGreen.black(label)}${label ? " " : ""}${colors.green(icon + msg)}`;
 
     print(output);
     if (this !== undefined) {
@@ -136,6 +191,7 @@ class Messenger {
   warning(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.warning + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -155,6 +211,7 @@ class Messenger {
   warn(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.warn + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -174,6 +231,7 @@ class Messenger {
   important(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.important + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -193,6 +251,7 @@ class Messenger {
   info(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.info + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgCyan.black(label)}${label ? " " : ""}${colors.cyan(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -212,6 +271,7 @@ class Messenger {
   debug(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.debug + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgKeyword("darkgray").black(label)}${label ? " " : ""}${colors.gray(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -231,6 +291,7 @@ class Messenger {
   log(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.log + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgWhite.black(label)}${label ? " " : ""}${colors.white(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -250,6 +311,7 @@ class Messenger {
   status(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.status + "  " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgMagenta.black(label)}${label ? " " : ""}${colors.magenta(icon + msg)}`;
     print(output);
     if (this !== undefined) {
@@ -269,6 +331,7 @@ class Messenger {
   notice(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.notice + " " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgKeyword("orange").black(label)}${label ? " " : ""}${colors.keyword("orange")(
       icon + msg
     )}`;
@@ -290,6 +353,7 @@ class Messenger {
   note(msg, label = "", showIcon = false) {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.note + " " : "";
+    msg = formatMessage(msg);
     let output = `${colors.bgKeyword("orange").black(label)}${label ? " " : ""}${colors.keyword("orange")(
       icon + msg
     )}`;
@@ -405,7 +469,7 @@ class Messenger {
    * @memberof Messenger
    */
   /* istanbul ignore next */
-  dd(data) {
+  dd(...data) {
     dd(data);
   }
   /**
@@ -415,7 +479,7 @@ class Messenger {
    * @memberof Messenger
    */
   /* istanbul ignore next */
-  dump(data) {
+  dump(...data) {
     dump(data);
   }
   /**
@@ -426,7 +490,10 @@ class Messenger {
    */
   /* istanbul ignore next */
   line(msg = "") {
-    let output = repeating(windowSize.width, msg);
+    let output = msg;
+    if (windowSize !== undefined) {
+      output = repeating(windowSize.width, msg);
+    }
     print(output);
     return output;
   }
@@ -440,11 +507,12 @@ class Messenger {
   /* istanbul ignore next */
   center(msg = "", fillText = " ") {
     // if the terminal width is shorter than message length, dont display fillText
-    if (stripAnsi(msg).length >= windowSize.width) {
+    let width = windowSize === undefined ? 100 : windowSize.width;
+    if (stripAnsi(msg).length >= width) {
       print(msg);
       return msg;
     } else {
-      let left = parseInt((windowSize.width - stripAnsi(msg).length) / 2, 10);
+      let left = parseInt((width - stripAnsi(msg).length) / 2, 10);
       let padStr = repeating(left / stripAnsi(fillText).length, fillText);
       let output = padStr + msg + padStr;
       print(output);

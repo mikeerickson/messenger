@@ -57,7 +57,6 @@ describe(classLabel("Messenger Class"), () => {
     });
     test("critical method should return colored output", () => {
       let output = print.critical(message);
-      console.log(raw(output));
       expect(raw(output)).toContain("u001b");
     });
     test("critical method should return label", () => {

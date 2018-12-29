@@ -21,17 +21,17 @@ console.log("");
 let showIcons = false;
 let showLabels = false;
 
-msg.critical("hello world", showLabels ? "CRITICAL" : "", showIcons);
-msg.error("hello world", showLabels ? "ERROR" : "", showIcons);
-msg.success("hello world", showLabels ? "SUCCESS" : "", showIcons);
-msg.warning("hello world", showLabels ? "WARNING" : "", showIcons);
-msg.important("hello world", showLabels ? "IMPORTANT" : "", showIcons);
-msg.warn("hello world", showLabels ? "WARN" : "", showIcons);
-msg.notice("hello world", showLabels ? "NOTICE" : "", showIcons);
-msg.note("hello world", showLabels ? "NOTE" : "", showIcons);
-msg.status("hello world", showLabels ? "STATUS" : "", showIcons);
-msg.info("hello world", showLabels ? "INFO" : "", showIcons);
-msg.debug("hello world", showLabels ? "DEBUG" : "", showIcons);
+msg.critical("critical message", showLabels ? "CRITICAL" : "", showIcons);
+msg.error("error message", showLabels ? "ERROR" : "", showIcons);
+msg.success("success message", showLabels ? "SUCCESS" : "", showIcons);
+msg.warning("warning message", showLabels ? "WARNING" : "", showIcons);
+msg.important("important message", showLabels ? "IMPORTANT" : "", showIcons);
+msg.warn("warn message", showLabels ? "WARN" : "", showIcons);
+msg.notice("notice message", showLabels ? "NOTICE" : "", showIcons);
+msg.note("note message", showLabels ? "NOTE" : "", showIcons);
+msg.status("status message", showLabels ? "STATUS" : "", showIcons);
+msg.info("info message", showLabels ? "INFO" : "", showIcons);
+msg.debug("debug message", showLabels ? "DEBUG" : "", showIcons);
 ```
 
 ### License
