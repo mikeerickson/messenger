@@ -208,4 +208,20 @@ describe(classLabel("Logger"), () => {
         console.log(err);
       });
   });
+  test("should create `note` entry", done => {
+    asyncLogger("note", "note entry")
+      .then(result => {
+        done();
+        fs.readFile(filename, "utf8")
+          .then(data => {
+            dataValidationRule("note entry", data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 });

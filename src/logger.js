@@ -124,7 +124,19 @@ Logger.prototype.write = function(data) {
   });
 };
 Logger.prototype.methods = function() {
-  return ["critical", "error", "warning", "warn", "success", "info", "important", "notice", "debug", "log"];
+  return [
+    "critical",
+    "error",
+    "warning",
+    "warn",
+    "success",
+    "info",
+    "important",
+    "notice",
+    "note",
+    "debug",
+    "log"
+  ];
 };
 /**
  * Prints a critical log message
@@ -146,6 +158,13 @@ Logger.prototype.error = function(message) {
  */
 Logger.prototype.notice = function(message) {
   this.write(this.format("NOTICE", message) + this.EOL);
+};
+/**
+ * Prints a note log message
+ * @param {string} message The message to be written
+ */
+Logger.prototype.note = function(message) {
+  this.write(this.format("NOTE", message) + this.EOL);
 };
 /**
  * Prints a status log message

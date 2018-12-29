@@ -37,6 +37,7 @@ class Messenger {
       important: "★",
       status: "◯",
       notice: "◉",
+      note: "◉",
       log: "⇢",
       debug: "◼"
     };
@@ -274,6 +275,27 @@ class Messenger {
     print(output);
     if (this !== undefined) {
       this.writeToLog("notice", output);
+    }
+    return output;
+  }
+  /**
+   * notice
+   *
+   * @param {*} msg
+   * @param {string} [label=""]
+   * @param {boolean} [showIcon=false]
+   * @returns
+   * @memberof Messenger
+   */
+  note(msg, label = "", showIcon = false) {
+    label = label ? " " + label + " " : "";
+    let icon = showIcon ? this.icons.note + " " : "";
+    let output = `${colors.bgKeyword("orange").black(label)}${label ? " " : ""}${colors.keyword("orange")(
+      icon + msg
+    )}`;
+    print(output);
+    if (this !== undefined) {
+      this.writeToLog("note", output);
     }
     return output;
   }

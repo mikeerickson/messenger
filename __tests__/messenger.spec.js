@@ -11,6 +11,7 @@ const {
   important,
   info,
   notice,
+  note,
   status,
   debug,
   log,
@@ -248,6 +249,32 @@ describe(classLabel("Messenger Class"), () => {
     test("status method should include icon", () => {
       let output = print.status(message, "", true);
       expect(output).toContain(m.icons.status);
+    });
+  });
+  describe.only(commandLabel("Note"), () => {
+    test("note static", () => {
+      expect(typeof note).toBe("function");
+      note(message);
+    });
+    test("note class method", () => {
+      expect(typeof m.note).toBe("function");
+    });
+    test("should return note messasge", () => {
+      let output = print.note(message);
+      expect(output).toContain(message);
+    });
+    test("note method should return colored output", () => {
+      let output = print.note(message);
+      expect(raw(output)).toContain("38;2;255;165");
+    });
+    test("note method should return label", () => {
+      let output = print.note(message, "TEST");
+      expect(output).toContain("TEST");
+      expect(raw(output)).toContain("[30m");
+    });
+    test("note method should include icon", () => {
+      let output = print.note(message, "", true);
+      expect(output).toContain(m.icons.note);
     });
   });
   describe(commandLabel("Notice"), () => {
