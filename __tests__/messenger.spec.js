@@ -33,8 +33,9 @@ describe(classLabel("Messenger Class"), () => {
     message = "Messenger Test";
   });
   describe(commandLabel("Miscellaneous"), () => {
-    test("version returns `pkgInfo.version` property", () => {
+    test("version returns `pkgInfo.version` property", done => {
       expect(print.version()).toEqual(pkgInfo.version);
+      done();
     });
   });
   describe(commandLabel("Critical"), () => {
