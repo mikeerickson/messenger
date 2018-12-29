@@ -57,7 +57,8 @@ describe(classLabel("Messenger Class"), () => {
     });
     test("critical method should return colored output", () => {
       let output = print.critical(message);
-      expect(raw(output)).toContain("38;2;255;69");
+      console.log(raw(output));
+      expect(raw(output)).toContain("u001b");
     });
     test("critical method should return label", () => {
       let output = print.critical(message, "TEST");
@@ -265,7 +266,7 @@ describe(classLabel("Messenger Class"), () => {
     });
     test("note method should return colored output", () => {
       let output = print.note(message);
-      expect(raw(output)).toContain("38;2;255;165");
+      expect(raw(output)).toContain("u001b");
     });
     test("note method should return label", () => {
       let output = print.note(message, "TEST");
@@ -291,7 +292,7 @@ describe(classLabel("Messenger Class"), () => {
     });
     test("notice method should return colored output", () => {
       let output = print.notice(message);
-      expect(raw(output)).toContain("38;2;255;165");
+      expect(raw(output)).toContain("u001b");
     });
     test("notice method should return label", () => {
       let output = print.notice(message, "TEST");
