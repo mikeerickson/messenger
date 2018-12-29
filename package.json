@@ -1,6 +1,6 @@
 {
   "name": "@codedungeon/messenger",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "clean node console messaging and logging",
   "license": "MIT",
   "keywords": [
