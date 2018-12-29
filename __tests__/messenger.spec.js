@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
+const pkgInfo = require("../package.json");
 
 const {
   critical,
@@ -30,6 +31,11 @@ describe(classLabel("Messenger Class"), () => {
   beforeEach(() => {
     m = print;
     message = "Messenger Test";
+  });
+  describe(commandLabel("Miscellaneous"), () => {
+    test("version returns `pkgInfo.version` property", () => {
+      expect(print.version()).toEqual(pkgInfo.version);
+    });
   });
   describe(commandLabel("Critical"), () => {
     test("critical static", () => {
@@ -139,7 +145,7 @@ describe(classLabel("Messenger Class"), () => {
       expect(output).toContain(m.icons.warning);
     });
   });
-  describe.only(commandLabel("Warn"), () => {
+  describe(commandLabel("Warn"), () => {
     test("warn static", () => {
       expect(typeof warn).toBe("function");
       warn(message);

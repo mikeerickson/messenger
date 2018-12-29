@@ -4,6 +4,7 @@ const windowSize = require("window-size");
 const { dd, dump } = require("dumper.js");
 const stripAnsi = require("strip-ansi");
 const Logger = require("./logger");
+const pkgInfo = require("../package.json");
 
 const print = args => {
   process.env.NODE_ENV === "test" ? null : console.log(args);
@@ -39,6 +40,10 @@ class Messenger {
       log: "⇢",
       debug: "◼"
     };
+  }
+
+  version() {
+    return pkgInfo.version;
   }
   initLogger(logToFile = false, logDir = "logs", appName = "app") {
     this.logToFile = logToFile;

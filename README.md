@@ -2,7 +2,7 @@
 
 ## Description
 
-** Project Description **
+Messenger is a simple node module for display pretting console logs (with lots of formatting options) and support for logging messages to `.log` files (including daily rotation)
 
 ## Install
 
@@ -13,15 +13,24 @@
 ## Usage
 
 ```js
-const tiny = require("@codedungeon/messenger");
+const msg = require("@codedungeon/messenger");
+const pkgInfo = require("./package.json");
+msg.initLogger(true, "logs", pkgInfo.name);
 
-tiny("So much space!");
-//=> "Somuchspace!"
+console.log("");
+let showIcons = false;
+let showLabels = false;
 
-tiny(1337);
-//=> Uncaught TypeError: Tiny wants a string!
-//    at tiny (<anonymous>:2:41)
-//    at <anonymous>:1:1
+msg.critical("hello world", showLabels ? "CRITICAL" : "", showIcons);
+msg.error("hello world", showLabels ? "ERROR" : "", showIcons);
+msg.success("hello world", showLabels ? "SUCCESS" : "", showIcons);
+msg.warning("hello world", showLabels ? "WARNING" : "", showIcons);
+msg.important("hello world", showLabels ? "IMPORTANT" : "", showIcons);
+msg.warn("hello world", showLabels ? "WARN" : "", showIcons);
+msg.notice("hello world", showLabels ? "NOTICE" : "", showIcons);
+msg.status("hello world", showLabels ? "STATUS" : "", showIcons);
+msg.info("hello world", showLabels ? "INFO" : "", showIcons);
+msg.debug("hello world", showLabels ? "DEBUG" : "", showIcons);
 ```
 
 ### License
