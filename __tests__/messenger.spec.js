@@ -251,7 +251,7 @@ describe(classLabel("Messenger Class"), () => {
       expect(output).toContain(m.icons.status);
     });
   });
-  describe.only(commandLabel("Note"), () => {
+  describe(commandLabel("Note"), () => {
     test("note static", () => {
       expect(typeof note).toBe("function");
       note(message);

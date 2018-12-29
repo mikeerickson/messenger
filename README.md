@@ -28,6 +28,7 @@ msg.warning("hello world", showLabels ? "WARNING" : "", showIcons);
 msg.important("hello world", showLabels ? "IMPORTANT" : "", showIcons);
 msg.warn("hello world", showLabels ? "WARN" : "", showIcons);
 msg.notice("hello world", showLabels ? "NOTICE" : "", showIcons);
+msg.note("hello world", showLabels ? "NOTE" : "", showIcons);
 msg.status("hello world", showLabels ? "STATUS" : "", showIcons);
 msg.info("hello world", showLabels ? "INFO" : "", showIcons);
 msg.debug("hello world", showLabels ? "DEBUG" : "", showIcons);
