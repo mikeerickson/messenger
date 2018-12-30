@@ -38,6 +38,13 @@ describe(classLabel("Messenger Class"), () => {
       expect(print.version()).toEqual(pkgInfo.version);
       done();
     });
+    test("console.log has been called", done => {
+      // https://stackoverflow.com/questions/44467657/jest-better-way-to-disable-console-inside-unit-tests
+      console.log = jest.fn();
+      console.log("hello world");
+      expect(console.log).toHaveBeenCalled();
+      done();
+    });
   });
   describe(commandLabel("Critical"), () => {
     test("critical static", () => {

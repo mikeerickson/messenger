@@ -18,7 +18,9 @@ if (windowSize === undefined) {
  * @param {*} args
  * @memberof Messenger
  */
-const print = args => {
+const print = (...args) => {
+  // console.log(args);
+  // this has been disabled, using jest function mock instead
   process.env.NODE_ENV === "test" ? null : console.log(args);
 };
 
@@ -332,9 +334,7 @@ class Messenger {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.notice + " " : "";
     msg = formatMessage(msg);
-    let output = `${colors.bgBlue.black(label)}${label ? " " : ""}${colors.blue(
-      icon + msg
-    )}`;
+    let output = `${colors.bgBlue.black(label)}${label ? " " : ""}${colors.blue(icon + msg)}`;
     print(output);
     if (this !== undefined) {
       this.writeToLog("notice", output);

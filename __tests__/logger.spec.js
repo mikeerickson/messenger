@@ -36,7 +36,6 @@ describe(classLabel("Logger"), () => {
     expect(result).toEqual(true);
     done();
   });
-
   test("should create log file", done => {
     fs.exists(filename)
       .then(result => {

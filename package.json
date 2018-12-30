@@ -57,5 +57,10 @@
     "repeating": "3.0.0",
     "strip-ansi": "5.0.0",
     "window-size": "1.1.1"
+  },
+  "jest": {
+    "globals": {
+      "NODE_ENV": "test"
+    }
   }
 }
