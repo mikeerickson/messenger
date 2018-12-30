@@ -519,6 +519,15 @@ class Messenger {
       return output;
     }
   }
+  /**
+   * icons
+   *
+   * @returns
+   * @memberof Messenger
+   */
+  icons() {
+    return this.icons;
+  }
 }
 
 // export all methods so they call be used statically
@@ -538,5 +547,6 @@ exports.dump = new Messenger().dump;
 exports.terminalInfo = new Messenger().terminalInfo;
 exports.center = new Messenger().center;
 exports.line = new Messenger().line;
+exports.icons = new Messenger().icons;
 
 module.exports = new Messenger();

@@ -1,6 +1,7 @@
 const colors = require("chalk");
 const repeat = require("repeating");
 const terminal = require("window-size");
+const stripAnsi = require("strip-ansi");
 
 // require some additional matchers and chaining
 require("jest-chain");
@@ -34,5 +35,6 @@ module.exports = {
   },
   colors,
   repeat,
-  terminal
+  terminal,
+  stripAnsi
 };
