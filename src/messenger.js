@@ -332,7 +332,7 @@ class Messenger {
     label = label ? " " + label + " " : "";
     let icon = showIcon ? this.icons.notice + " " : "";
     msg = formatMessage(msg);
-    let output = `${colors.bgKeyword("orange").black(label)}${label ? " " : ""}${colors.keyword("orange")(
+    let output = `${colors.bgBlue.black(label)}${label ? " " : ""}${colors.blue(
       icon + msg
     )}`;
     print(output);
