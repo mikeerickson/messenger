@@ -11,6 +11,21 @@ let windowSize = require("window-size");
 if (windowSize === undefined) {
   windowSize = { width: 100 };
 }
+
+const messageColors = {
+  reset: "\u001b[39m",
+  critical: { fg: "\u001b[38;5;202m", bg: "\u001b[48;5;202m" },
+  error: { fg: "\u001b[31m", bg: "\u001b[41m" },
+  success: { fg: "\u001b[32m", bg: "\u001b[42m" },
+  warn: { fg: "\u001b[33m", bg: "\u001b[43m" },
+  warning: { fg: "\u001b[33m", bg: "\u001b[43m" },
+  info: { fg: "\u001b[36m", bg: "\u001b[46m" },
+  debug: { fg: "\u001b[90m", bg: "\u001b[48;5;248m" },
+  log: { fg: "\u001b[37m", bg: "\u001b[47m" },
+  note: { fg: "\u001b[38;5;214m", bg: "\u001b[48;5;214m" },
+  notice: { fg: "\u001b[34m", bg: "\u001b[44m" },
+  important: { fg: "\u001b[33m", bg: "\u001b[43m" }
+};
 /**
  * print
  *
@@ -18,7 +33,7 @@ if (windowSize === undefined) {
  * @param {*} args
  * @memberof Messenger
  */
-const print = (...args) => {
+const print = args => {
   // console.log(args);
   // this has been disabled, using jest function mock instead
   process.env.NODE_ENV === "test" ? null : console.log(args);
@@ -61,6 +76,7 @@ class Messenger {
   constructor() {
     this.logToFile = false;
     this.appName = "app";
+    this.messageColors = messageColors;
     this.icons = {
       critical: "🚫",
       error: "✖",
@@ -548,5 +564,6 @@ exports.terminalInfo = new Messenger().terminalInfo;
 exports.center = new Messenger().center;
 exports.line = new Messenger().line;
 exports.icons = new Messenger().icons;
+exports.messageColors = new Messenger().messageColors;
 
 module.exports = new Messenger();
