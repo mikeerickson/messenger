@@ -24,7 +24,8 @@ const messageColors = {
   log: { fg: "\u001b[37m", bg: "\u001b[47m" },
   note: { fg: "\u001b[38;5;214m", bg: "\u001b[48;5;214m" },
   notice: { fg: "\u001b[34m", bg: "\u001b[44m" },
-  important: { fg: "\u001b[33m", bg: "\u001b[43m" }
+  important: { fg: "\u001b[33m", bg: "\u001b[43m" },
+  status: { fg: "\u001b[35m", bg: "\u001b[45m" }
 };
 /**
  * print
