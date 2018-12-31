@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 const Logger = require("../src/logger");
-const { classLabel } = require("./test-utils");
+const { classLabel } = require("./testUtils");
 
 const logger = new Logger({ path: "__tests__", appName: "logger-test" });
 const filename = logger.file;

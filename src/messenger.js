@@ -1,3 +1,4 @@
+const os = require("os");
 const colors = require("chalk");
 const Logger = require("./logger");
 const repeating = require("repeating");
@@ -14,19 +15,31 @@ if (windowSize === undefined) {
 
 const messageColors = {
   reset: "\u001b[39m",
-  critical: { fg: "\u001b[38;5;202m", bg: "\u001b[48;5;202m" },
-  error: { fg: "\u001b[31m", bg: "\u001b[41m" },
-  success: { fg: "\u001b[32m", bg: "\u001b[42m" },
-  warn: { fg: "\u001b[33m", bg: "\u001b[43m" },
-  warning: { fg: "\u001b[33m", bg: "\u001b[43m" },
-  info: { fg: "\u001b[36m", bg: "\u001b[46m" },
-  debug: { fg: "\u001b[90m", bg: "\u001b[48;5;248m" },
-  log: { fg: "\u001b[37m", bg: "\u001b[47m" },
-  note: { fg: "\u001b[38;5;214m", bg: "\u001b[48;5;214m" },
-  notice: { fg: "\u001b[34m", bg: "\u001b[44m" },
-  important: { fg: "\u001b[33m", bg: "\u001b[43m" },
-  status: { fg: "\u001b[35m", bg: "\u001b[45m" }
+  critical: { fg: "001b[38;2;255;69;0m", bg: "001b[48;2;255;69;0m" },
+  error: { fg: "001b[31m", bg: "001b[41m" },
+  success: { fg: "001b[32m", bg: "001b[42m" },
+  warn: { fg: "001b[33m", bg: "001b[43m" },
+  warning: { fg: "001b[33m", bg: "001b[43m" },
+  info: { fg: "001b[36m", bg: "001b[46m" },
+  debug: { fg: "001b[90m", bg: "001b[48;2;169;169;169m" },
+  log: { fg: "001b[37m", bg: "001b[47m" },
+  note: { fg: "001b[38;2;255;165;0m", bg: "001b[48;2;255;165;0m" },
+  notice: { fg: "001b[34m", bg: "001b[44m" },
+  important: { fg: "001b[33m", bg: "001b[43m" },
+  status: { fg: "001b[35m", bg: "001b[45m" }
 };
+
+if (os.platform() === "linux") {
+  messageColors.critical.fg = "001b[91m";
+  messageColors.critical.bg = "001b[101m";
+
+  messageColors.note.fg = "001b[93m";
+  messageColors.note.bg = "001b[103m";
+
+  messageColors.debug.fg = "001b[90m";
+  messageColors.debug.bg = "001b[47m";
+}
+
 /**
  * print
  *

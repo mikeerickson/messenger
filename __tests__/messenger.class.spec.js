@@ -1,5 +1,5 @@
 const print = require("../src/messenger");
-let { commandLabel, classLabel } = require("./test-utils");
+let { commandLabel, classLabel, raw } = require("./testUtils");
 
 const icons = print.icons;
 const messageColor = print.messageColors;
@@ -16,7 +16,7 @@ const commandTest = command => {
   ];
   test.each(tests)(`.${command}(%p, %p, %s)`, (msg, label, icon, expected) => {
     let result = print[command](msg, label, icon);
-    expect(result).toContain(expected);
+    expect(raw(result)).toContain(expected);
   });
 };
 

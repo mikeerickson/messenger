@@ -46,6 +46,7 @@
     "test:full": "jest ./__tests__/*.spec.js --notify",
     "test:unit": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",
     "test": "yarn run test:unit",
+    "test:ci": "yarn run test:unit --silent",
     "pre-commit": "yarn run test && yarn run lint"
   },
   "dependencies": {
