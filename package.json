@@ -42,6 +42,8 @@
     "bump:dev": "version-bump cli pre-release:dev",
     "bump:patch": "version-bump cli patch",
     "bump:minor": "version-bump cli minor",
+    "docker:build": "docker build -f docker/Dockerfile -t dev-node .",
+    "docker:run": "docker run  --name messenger -v$(pwd):/usr/code/app --rm -it dev-node ash -l",
     "lint": "eslint ./src/**/*.js",
     "test:full": "jest ./__tests__/*.spec.js --notify",
     "test:unit": "jest ./__tests__/*.spec.js --reporters jest-dot-reporter --notify",

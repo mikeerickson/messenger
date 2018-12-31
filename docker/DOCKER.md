@@ -15,14 +15,14 @@ Make sure to use the `Dockerfile` and `.dockerignore` files contained in the rep
 - Build Image
 
 ```bash
-> docker build -t dev-node .
-               tag         build directory
+> docker build -f docker/Dockerfile -t dev-node .
+               Dockerfile           tag         build directory
 ```
 
 - Run container
 
 ```bash
-> docker run  --name debug-ci -v$(pwd):/usr/src/app --rm -it dev-node ash
+> docker run  --name debug-ci -v$(pwd):/usr/src/app --rm -it dev-node ash -l
 ```
 
 _--name_ is local name as displayed in `docker ps`
@@ -32,8 +32,8 @@ _-v_ is mounted volume so we can edit locally (destination is the same directory
 `dev-node` is the same name which was defined in build process
 
 ```bash
-> docker run  --name debug-ci -v$(pwd):/usr/src/app --rm -it dev-node ash
-              instance name     $(pwd):work/dir              container ash (apline bash)
+> docker run  --name debug-ci -v$(pwd):/usr/src/app --rm -it dev-node ash -l
+              instance name     $(pwd):work/dir              container ash (apline bash)  -l will load ~/.profile
 ```
 
 ### References
