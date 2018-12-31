@@ -24,4 +24,4 @@ COPY . /usr/src/app
 CMD [ "yarn","run", "test" ]
 
 # run container as follows
-# docker run  --name debug-ci -v$(pwd):/usr/src/app --rm -it test-node ash
+# docker run  --name debug-ci -v$(pwd):/usr/src/app --rm -it dev-node ash
