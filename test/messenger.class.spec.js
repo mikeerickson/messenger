@@ -8,6 +8,21 @@ let { classLabel, commandLabel, testLabel, raw } = require("./testUtils");
 const icons = print.icons;
 const messageColor = print.messageColors;
 
+let commands = [
+  "critical",
+  "error",
+  "success",
+  "warning",
+  "warn",
+  "important",
+  "info",
+  "note",
+  "notice",
+  "log",
+  "debug",
+  "status"
+];
+
 const commandTest = command => {
   let message = `${command} message`;
   let tests = [
@@ -26,20 +41,6 @@ const commandTest = command => {
 };
 
 describe(classLabel("Messenger Class"), () => {
-  let commands = [
-    "critical",
-    "error",
-    "success",
-    "warning",
-    "warn",
-    "important",
-    "info",
-    "note",
-    "notice",
-    "log",
-    "debug",
-    "status"
-  ];
   commands.forEach(command => {
     describe(commandLabel(`.${command}`), () => {
       commandTest(command);
@@ -50,7 +51,9 @@ describe(classLabel("Messenger Class"), () => {
 describe(classLabel("Messenger Class Utilities"), () => {
   it("should confirm icons exists for each method", () => {
     let icons = print.getIcons();
-    expect(icons.hasOwnProperty("error")).to.equal(true);
+    commands.forEach(command => {
+      expect(icons.hasOwnProperty(command)).to.equal(true);
+    });
   });
   it("return information about terminal", () => {
     let terminal = print.terminalInfo();
@@ -58,14 +61,10 @@ describe(classLabel("Messenger Class Utilities"), () => {
   });
   it("properly formats message object", () => {
     let message = print.info({ fname: "Mike" });
-    expect(message).contains("Mike");
+    expect(message).to.contain("Mike");
   });
   it("properly formats message array", () => {
     let message = print.info(["mike", "erickson"]);
-    expect(message).contain("mike erickson");
-  });
-  it("should test linux specific code", () => {
-    let message = print.info(["mike", "erickson"]);
-    expect(message).contain("mike erickson");
+    expect(message).to.contain("mike erickson");
   });
 });

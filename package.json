@@ -58,7 +58,8 @@
     "test:mocha:full": "mocha ./test/*.spec.js",
     "test:mocha:unit": "mocha ./test/*.spec.js",
     "test": "yarn run test:mocha:unit",
-    "test:unit": "yarn run test:mocha:unit",
+    "test:full": "yarn run test:mocha:unit --growl",
+    "test:unit": "yarn run test:mocha:unit --reporter dot",
     "test:ci": "yarn run test:mocha:unit --reporter dot",
     "pre-commit": "yarn run test:ci && yarn run lint"
   },
