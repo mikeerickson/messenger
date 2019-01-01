@@ -9,6 +9,8 @@ const fs = require("fs-extra");
  * @param {string} options.path Desired path to the folder [optional] Default: __dirname
  * @param {string} options.appName Desired log file appName [optional] Default: log
  */
+
+/* istanbul ignore next */
 function Logger(options) {
   // const path = require("path");
 
@@ -51,12 +53,14 @@ function Logger(options) {
     },
     date: {
       get: function() {
+        /* istanbul ignore next */
         return dateStamp(new Date());
       }
     }
   });
 }
 
+/* istanbul ignore next */
 const formatDate = (date = new Date(), useAMPM = true, showSeconds = true, showMicro = false) => {
   if (!useAMPM) {
     useAMPM = false;
@@ -109,6 +113,7 @@ const formatDate = (date = new Date(), useAMPM = true, showSeconds = true, showM
   return `${strDate} ${strTime}`;
 };
 
+/* istanbul ignore next */
 Logger.prototype.format = (logLevel = "log", logMsg = "") => {
   let ts = pad(formatDate(new Date(), false), 21);
   let level = pad(logLevel.toUpperCase(), 10);
@@ -118,6 +123,7 @@ Logger.prototype.format = (logLevel = "log", logMsg = "") => {
  * Writes the passed string to the log file
  * @param {string} data The data to be written in the log
  */
+/* istanbul ignore next */
 Logger.prototype.write = function(data) {
   this.fs.appendFileSync(this.file, data, function(err) {
     if (err) throw err;
@@ -226,6 +232,7 @@ Logger.prototype.debug = function(message) {
  * Prints a data log message
  * @param {string} message The message to be printed
  */
+/* istanbul ignore next */
 Logger.prototype.data = function(message) {
   this.write(this.format("DATA", message) + this.EOL);
 };

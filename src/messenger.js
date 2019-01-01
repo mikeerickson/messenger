@@ -9,6 +9,8 @@ let windowSize = require("window-size");
 
 // this is required when message executed in non terminal window
 // such as VSCode code runner
+
+/* istanbul ignore next */
 if (windowSize === undefined) {
   windowSize = { width: 100 };
 }
@@ -29,13 +31,12 @@ const messageColors = {
   status: { fg: "001b[35m", bg: "001b[45m" }
 };
 
+/* istanbul ignore next */
 if (os.platform() === "linux") {
   messageColors.critical.fg = "001b[91m";
   messageColors.critical.bg = "001b[101m";
-
   messageColors.note.fg = "001b[93m";
   messageColors.note.bg = "001b[103m";
-
   messageColors.debug.fg = "001b[90m";
   messageColors.debug.bg = "001b[47m";
 }
@@ -50,6 +51,7 @@ if (os.platform() === "linux") {
 const print = args => {
   // console.log(args);
   // this has been disabled, using jest function mock instead
+  /* istanbul ignore next */
   process.env.NODE_ENV === "test" ? null : console.log(args);
 };
 
@@ -116,6 +118,7 @@ class Messenger {
   version() {
     return pkgInfo.version;
   }
+  /* istanbul ignore next */
   /**
    * initLogger
    *
@@ -133,6 +136,7 @@ class Messenger {
       this.methods = this.logger.methods();
     }
   }
+  /* istanbul ignore next */
   /**
    * writeToLog
    *
@@ -555,7 +559,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  icons() {
+  getIcons() {
     return this.icons;
   }
 }
@@ -578,6 +582,7 @@ exports.terminalInfo = new Messenger().terminalInfo;
 exports.center = new Messenger().center;
 exports.line = new Messenger().line;
 exports.icons = new Messenger().icons;
+exports.getIcons = new Messenger().getIcons;
 exports.messageColors = new Messenger().messageColors;
 
 module.exports = new Messenger();

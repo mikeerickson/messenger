@@ -224,4 +224,20 @@ describe(classLabel("Logger"), () => {
         console.log(err);
       });
   });
+  it("should create `status` entry", done => {
+    asyncLogger("status", "status entry")
+      .then(result => {
+        done();
+        fs.readFile(filename, "utf8")
+          .then(data => {
+            dataValidationRule("status entry", data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 });

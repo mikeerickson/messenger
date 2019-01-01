@@ -25,9 +25,6 @@ module.exports = {
   commandLabel: (str, icon = TEST_ICON) => {
     return colors.cyan.bold(`\n ${icon}  ${str}\n`);
   },
-  testLabel: (str, icon = TEST_ICON) => {
-    return colors.cyan.bold(`\n ${icon}   ${str}\n`);
-  },
   raw: str => {
     return JSON.stringify(str);
   },

@@ -2,7 +2,8 @@ const forEach = require("mocha-each");
 const expect = require("chai").expect;
 
 const print = require("../src/messenger");
-let { classLabel, commandLabel, raw } = require("./testUtils");
+print.initLogger(true, "test", "test.log");
+let { classLabel, commandLabel, testLabel, raw } = require("./testUtils");
 
 const icons = print.icons;
 const messageColor = print.messageColors;
@@ -43,5 +44,28 @@ describe(classLabel("Messenger Class"), () => {
     describe(commandLabel(`.${command}`), () => {
       commandTest(command);
     });
+  });
+});
+
+describe(classLabel("Messenger Class Utilities"), () => {
+  it("should confirm icons exists for each method", () => {
+    let icons = print.getIcons();
+    expect(icons.hasOwnProperty("error")).to.equal(true);
+  });
+  it("return information about terminal", () => {
+    let terminal = print.terminalInfo();
+    expect(terminal.hasOwnProperty("width")).to.equal(true);
+  });
+  it("properly formats message object", () => {
+    let message = print.info({ fname: "Mike" });
+    expect(message).contains("Mike");
+  });
+  it("properly formats message array", () => {
+    let message = print.info(["mike", "erickson"]);
+    expect(message).contain("mike erickson");
+  });
+  it("should test linux specific code", () => {
+    let message = print.info(["mike", "erickson"]);
+    expect(message).contain("mike erickson");
   });
 });
