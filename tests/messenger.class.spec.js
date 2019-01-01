@@ -1,5 +1,3 @@
-// messenger.class.spec.js (mocha)
-
 const forEach = require("mocha-each");
 const expect = require("chai").expect;
 
@@ -20,7 +18,7 @@ const commandTest = command => {
     [message, "", true, icons[command]]
   ];
 
-  forEach(tests).it(`.${command}(%s, %s, %d)`, (msg, label, icon, expected) => {
+  forEach(tests).it(`.${command}(%s, %s, %s)`, (msg, label, icon, expected) => {
     let result = print[command](msg, label, icon);
     expect(raw(result)).contain(expected);
   });
