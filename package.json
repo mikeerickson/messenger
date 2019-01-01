@@ -55,6 +55,7 @@
     "test:mocha:full": "mocha ./tests/*.spec.js",
     "test:mocha:unit": "mocha ./tests/*.spec.js",
     "test": "yarn run test:mocha:unit",
+    "test:unit": "yarn run test:mocha:unit",
     "test:ci": "yarn run test:mocha:unit --reporter dot",
     "pre-commit": "yarn run test && yarn run lint"
   },
@@ -67,10 +68,5 @@
     "repeating": "3.0.0",
     "strip-ansi": "5.0.0",
     "window-size": "1.1.1"
-  },
-  "jest": {
-    "globals": {
-      "NODE_ENV": "test"
-    }
   }
 }
