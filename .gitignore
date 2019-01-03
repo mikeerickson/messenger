@@ -4,4 +4,4 @@ NOTES.md
 logs/
 *.log
 mochawesome-report
-.nyc_output
+.nyc_output/
