@@ -1,10 +1,5 @@
 process.env.NODE_ENV = "test";
 
-const colors = require("chalk");
-const repeat = require("repeating");
-const terminal = require("window-size");
-const stripAnsi = require("strip-ansi");
-
 const MAIN_LINE = "⏤";
 const MAIN_ICON = "🚧";
 const DESCRIBE_ICON = "✏️";
@@ -19,7 +14,6 @@ module.exports = {
   },
   classLabel: (str, icon = MAIN_ICON) => {
     let main = " " + str + "  " + repeat(terminal.width - str.length - 10, MAIN_LINE);
-    // return colors.magenta.bold(`\n${icon}  ${main}`);
     return `\n${icon}  ` + colors.magenta.bold(`${main}`);
   },
   commandLabel: (str, icon = TEST_ICON) => {
@@ -28,8 +22,12 @@ module.exports = {
   raw: str => {
     return JSON.stringify(str);
   },
-  colors,
-  repeat,
-  terminal,
-  stripAnsi
+  colors: require("chalk"),
+  repeat: (str, num) => {
+    let repeating = require("repeating");
+    // reverse parameters to be consinstent with other repeating libraries
+    return repeating(num, str);
+  },
+  terminal: require("window-size"),
+  stripAnsi: require("strip-ansi")
 };
