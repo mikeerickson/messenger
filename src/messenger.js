@@ -17,15 +17,15 @@ if (windowSize === undefined) {
 
 const messageColors = {
   reset: "\u001b[39m",
-  critical: { fg: "001b[38;2;255;69;0m", bg: "001b[48;2;255;69;0m" },
+  critical: { fg: "001b[38", bg: "001b[48" },
   error: { fg: "001b[31m", bg: "001b[41m" },
   success: { fg: "001b[32m", bg: "001b[42m" },
   warn: { fg: "001b[33m", bg: "001b[43m" },
   warning: { fg: "001b[33m", bg: "001b[43m" },
   info: { fg: "001b[36m", bg: "001b[46m" },
-  debug: { fg: "001b[90m", bg: "001b[48;2;169;169;169m" },
+  debug: { fg: "001b[90m", bg: "001b[48" },
   log: { fg: "001b[37m", bg: "001b[47m" },
-  note: { fg: "001b[38;2;255;165;0m", bg: "001b[48;2;255;165;0m" },
+  note: { fg: "001b[38", bg: "001b[48" },
   notice: { fg: "001b[34m", bg: "001b[44m" },
   important: { fg: "001b[33m", bg: "001b[43m" },
   status: { fg: "001b[35m", bg: "001b[45m" }

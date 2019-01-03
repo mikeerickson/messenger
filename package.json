@@ -51,6 +51,7 @@
     "bump:minor": "version-bump cli minor",
     "docker:build": "docker build -f docker/Dockerfile -t dev-node .",
     "docker:run": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node ash -l",
+    "format": "prettier --write \"{**/*.js,__tests__/**/*.js}\" --loglevel error",
     "lint": "eslint ./src/**/*.js",
     "test:coverage": "nyc mocha --reporter=dot",
     "test:jest:full": "jest ./__tests__/*.spec.js --notify",
@@ -70,6 +71,7 @@
     "jest-dot-reporter": "1.0.7",
     "pad": "2.2.1",
     "repeating": "3.0.0",
+    "simple-mocha-reporter": "1.0.5",
     "strip-ansi": "5.0.0",
     "window-size": "1.1.1"
   }
