@@ -21,10 +21,10 @@ const {
 
 let { commandLabel, classLabel, repeat, raw } = require("./testUtils");
 
-describe(classLabel("Messenger Class"), () => {
+describe(classLabel("Messenger Static"), () => {
   let message;
   beforeEach(() => {
-    message = "Messenger Test";
+    message = "Messenger Static Test";
   });
   describe(commandLabel("Miscellaneous"), () => {
     it("version returns `pkgInfo.version` property", done => {

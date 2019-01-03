@@ -1,5 +1,6 @@
 {
   "workbench.colorCustomizations": {
     "statusBar.background": "#269F42"
-  }
+  },
+  "mocha.enabled": true
 }
