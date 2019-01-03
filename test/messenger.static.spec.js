@@ -19,98 +19,98 @@ const {
   line
 } = require("../src/messenger");
 
-let { commandLabel, classLabel, repeat, raw } = require("./testUtils");
+let { repeat, raw } = require("./testUtils");
 
-describe(classLabel("Messenger Static"), () => {
+describe("Messenger Static", () => {
   let message;
   beforeEach(() => {
     message = "Messenger Static Test";
   });
-  describe(commandLabel("Miscellaneous"), () => {
+  describe("Miscellaneous", () => {
     it("version returns `pkgInfo.version` property", done => {
       expect(print.version()).to.equal(pkgInfo.version);
       done();
     });
   });
-  describe(commandLabel("Critical"), () => {
+  describe("Critical", () => {
     it("critical static", () => {
       expect(typeof critical).to.be.equal("function");
       critical(message);
     });
   });
-  describe(commandLabel("Error"), () => {
+  describe("Error", () => {
     it("error static", () => {
       expect(typeof error).to.be.equal("function");
       error(message);
     });
   });
-  describe(commandLabel("Success"), () => {
+  describe("Success", () => {
     it("success static", () => {
       expect(typeof success).to.be.equal("function");
       success(message);
     });
   });
-  describe(commandLabel("Warning"), () => {
+  describe("Warning", () => {
     it("warning static", () => {
       expect(typeof warning).to.be.equal("function");
       warning(message);
     });
   });
-  describe(commandLabel("Warn"), () => {
+  describe("Warn", () => {
     it("warn static", () => {
       expect(typeof warn).to.be.equal("function");
       warn(message);
     });
   });
-  describe(commandLabel("Info"), () => {
+  describe("Info", () => {
     it("info static", () => {
       expect(typeof info).to.be.equal("function");
       info(message);
     });
   });
-  describe(commandLabel("Important"), () => {
+  describe("Important", () => {
     it("important static", () => {
       expect(typeof important).to.be.equal("function");
       important(message);
     });
   });
-  describe(commandLabel("Status"), () => {
+  describe("Status", () => {
     it("status static", () => {
       expect(typeof status).to.be.equal("function");
       status(message);
     });
   });
-  describe(commandLabel("Note"), () => {
+  describe("Note", () => {
     it("note static", () => {
       expect(typeof note).to.be.equal("function");
       note(message);
     });
   });
-  describe(commandLabel("Notice"), () => {
+  describe("Notice", () => {
     it("notice static", () => {
       expect(typeof notice).to.be.equal("function");
       notice(message);
     });
   });
-  describe(commandLabel("Log"), () => {
+  describe("Log", () => {
     it("log static", () => {
       expect(typeof log).to.be.equal("function");
       log(message);
     });
   });
-  describe(commandLabel("Debug"), () => {
+  describe("Debug", () => {
     it("debug static", () => {
       expect(typeof debug).to.be.equal("function");
       debug(message);
     });
   });
-  describe(commandLabel("Center"), () => {
+  describe("Center", () => {
     it("center static", () => {
       expect(typeof center).to.be.equal("function");
       center(message);
     });
   });
-  describe(commandLabel("Line"), () => {
+  describe("Line", () => {
     it("line static", () => {
       expect(typeof line).to.be.equal("function");
       line(message);

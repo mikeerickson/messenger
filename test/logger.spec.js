@@ -1,7 +1,6 @@
 const fs = require("fs-extra");
 const path = require("path");
 const Logger = require("../src/logger");
-const { classLabel } = require("./testUtils");
 
 const logger = new Logger({ path: "__tests__", appName: "logger-test" });
 const filename = logger.file;
@@ -23,7 +22,7 @@ async function asyncLogger(type, msg) {
   return await logger[type](msg);
 }
 
-describe(classLabel("Logger"), () => {
+describe("Logger", () => {
   beforeEach(done => {
     logger.log("beforeEach");
     done();
@@ -151,22 +150,6 @@ describe(classLabel("Logger"), () => {
         fs.readFile(filename, "utf8")
           .then(data => {
             dataValidationRule("warning entry", data);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
-  it("should create `warn` entry", done => {
-    asyncLogger("warn", "warn entry")
-      .then(result => {
-        done();
-        fs.readFile(filename, "utf8")
-          .then(data => {
-            dataValidationRule("warn entry", data);
           })
           .catch(err => {
             console.error(err);

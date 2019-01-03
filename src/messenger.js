@@ -17,18 +17,18 @@ if (windowSize === undefined) {
 
 const messageColors = {
   reset: "\u001b[39m",
-  critical: { fg: "001b[38", bg: "001b[48" },
-  error: { fg: "001b[31m", bg: "001b[41m" },
-  success: { fg: "001b[32m", bg: "001b[42m" },
-  warn: { fg: "001b[33m", bg: "001b[43m" },
-  warning: { fg: "001b[33m", bg: "001b[43m" },
-  info: { fg: "001b[36m", bg: "001b[46m" },
-  debug: { fg: "001b[90m", bg: "001b[48" },
-  log: { fg: "001b[37m", bg: "001b[47m" },
-  note: { fg: "001b[38", bg: "001b[48" },
-  notice: { fg: "001b[34m", bg: "001b[44m" },
-  important: { fg: "001b[33m", bg: "001b[43m" },
-  status: { fg: "001b[35m", bg: "001b[45m" }
+  critical: { fg: "38m", bg: "48m" },
+  error: { fg: "31m", bg: "41m" },
+  success: { fg: "32m", bg: "42m" },
+  warn: { fg: "33m", bg: "43m" },
+  warning: { fg: "33m", bg: "43m" },
+  info: { fg: "36m", bg: "46m" },
+  debug: { fg: "90m", bg: "48m" },
+  log: { fg: "37m", bg: "47m" },
+  note: { fg: "38m", bg: "48m" },
+  notice: { fg: "34m", bg: "44m" },
+  important: { fg: "33m", bg: "43m" },
+  status: { fg: "35m", bg: "45m" }
 };
 
 /* istanbul ignore next */
