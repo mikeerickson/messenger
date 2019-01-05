@@ -1,5 +1,4 @@
 const colors = require("chalk");
-const repeat = require("repeating");
 const terminal = require("window-size");
 const stripAnsi = require("strip-ansi");
 
@@ -20,7 +19,7 @@ module.exports = {
     TEST_ICON
   },
   classLabel: (str, icon = MAIN_ICON) => {
-    let main = " " + str + "  " + repeat(terminal.width - str.length - 10, MAIN_LINE);
+    let main = " " + str + "  " + MAIN_LINE.repeat(terminal.width - str.length);
     // return colors.magenta.bold(`\n${icon}  ${main}`);
     return `\n${icon}  ` + colors.magenta.bold(`${main}`);
   },
@@ -34,7 +33,6 @@ module.exports = {
     return JSON.stringify(str);
   },
   colors,
-  repeat,
   terminal,
   stripAnsi
 };

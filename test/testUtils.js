@@ -13,7 +13,7 @@ module.exports = {
     TEST_ICON
   },
   classLabel: (str, icon = MAIN_ICON) => {
-    let main = " " + str + "  " + repeat(terminal.width - str.length - 10, MAIN_LINE);
+    let main = " " + str + "  " + MAIN_LINE.repeat(terminal.width - str.length - 10);
     return `\n${icon}  ` + colors.magenta.bold(`${main}`);
   },
   commandLabel: (str, icon = TEST_ICON) => {
@@ -23,11 +23,6 @@ module.exports = {
     return JSON.stringify(str);
   },
   colors: require("chalk"),
-  repeat: (str, num) => {
-    let repeating = require("repeating");
-    // reverse parameters to be consinstent with other repeating libraries
-    return repeating(num, str);
-  },
   terminal: require("window-size"),
   stripAnsi: require("strip-ansi")
 };

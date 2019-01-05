@@ -1,6 +1,6 @@
+const expect = require("chai").expect;
 const print = require("../src/messenger");
 const pkgInfo = require("../package.json");
-const expect = require("chai").expect;
 
 const {
   critical,
@@ -19,8 +19,6 @@ const {
   line
 } = require("../src/messenger");
 
-let { repeat, raw } = require("./testUtils");
-
 describe("Messenger Static", () => {
   let message;
   beforeEach(() => {
@@ -32,73 +30,73 @@ describe("Messenger Static", () => {
       done();
     });
   });
-  describe("Critical", () => {
+  describe("Critical Static", () => {
     it("critical static", () => {
       expect(typeof critical).to.be.equal("function");
       critical(message);
     });
   });
-  describe("Error", () => {
+  describe("Error Static", () => {
     it("error static", () => {
       expect(typeof error).to.be.equal("function");
       error(message);
     });
   });
-  describe("Success", () => {
+  describe("Success Static", () => {
     it("success static", () => {
       expect(typeof success).to.be.equal("function");
       success(message);
     });
   });
-  describe("Warning", () => {
+  describe("Warning Static", () => {
     it("warning static", () => {
       expect(typeof warning).to.be.equal("function");
       warning(message);
     });
   });
-  describe("Warn", () => {
+  describe("Warn Static", () => {
     it("warn static", () => {
       expect(typeof warn).to.be.equal("function");
       warn(message);
     });
   });
-  describe("Info", () => {
+  describe("Info Static", () => {
     it("info static", () => {
       expect(typeof info).to.be.equal("function");
       info(message);
     });
   });
-  describe("Important", () => {
+  describe("Important Static", () => {
     it("important static", () => {
       expect(typeof important).to.be.equal("function");
       important(message);
     });
   });
-  describe("Status", () => {
+  describe("Status Static", () => {
     it("status static", () => {
       expect(typeof status).to.be.equal("function");
       status(message);
     });
   });
-  describe("Note", () => {
+  describe("Note Static", () => {
     it("note static", () => {
       expect(typeof note).to.be.equal("function");
       note(message);
     });
   });
-  describe("Notice", () => {
+  describe("Notice Static", () => {
     it("notice static", () => {
       expect(typeof notice).to.be.equal("function");
       notice(message);
     });
   });
-  describe("Log", () => {
+  describe("Log Static", () => {
     it("log static", () => {
       expect(typeof log).to.be.equal("function");
       log(message);
     });
   });
-  describe("Debug", () => {
+  describe("Debug Static", () => {
     it("debug static", () => {
       expect(typeof debug).to.be.equal("function");
       debug(message);

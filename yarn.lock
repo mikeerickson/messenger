@@ -4558,11 +4558,6 @@ repeat-string@^1.5.2, repeat-string@^1.6.1:
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
   integrity sha1-jcrkcOHIirwtYA//Sndihtp15jc=
 
-repeating@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/repeating/-/repeating-3.0.0.tgz#f4c376fdd2015761f6f96f4303b1224d581e802f"
-  integrity sha1-9MN2/dIBV2H2+W9DA7EiTVgegC8=
-
 repeating@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/repeating/-/repeating-2.0.1.tgz#5214c53a926d3552707527fbab415dbc08d06dda"

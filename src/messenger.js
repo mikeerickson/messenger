@@ -1,7 +1,6 @@
 const os = require("os");
 const colors = require("chalk");
 const Logger = require("./logger");
-const repeating = require("repeating");
 const stripAnsi = require("strip-ansi");
 const { dd, dump } = require("dumper.js");
 const pkgInfo = require("../package.json");
@@ -526,7 +525,7 @@ class Messenger {
   line(msg = "") {
     let output = msg;
     if (windowSize !== undefined) {
-      output = repeating(windowSize.width, msg);
+      output = msg.repeat(windowSize.width, msg);
     }
     print(output);
     return output;
@@ -547,7 +546,7 @@ class Messenger {
       return msg;
     } else {
       let left = parseInt((width - stripAnsi(msg).length) / 2, 10);
-      let padStr = repeating(left / stripAnsi(fillText).length, fillText);
+      let padStr = fillText.repeat(left / stripAnsi(fillText).length);
       let output = padStr + msg + padStr;
       print(output);
       return output;

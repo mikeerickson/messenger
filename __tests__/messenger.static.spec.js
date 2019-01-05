@@ -18,8 +18,6 @@ const {
   line
 } = require("../src/messenger");
 
-let { commandLabel, classLabel, repeat, raw } = require("./testUtils");
-
 describe(classLabel("Messenger Class"), () => {
   let message;
   beforeEach(() => {

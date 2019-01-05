@@ -11,7 +11,6 @@ const messageColor = print.messageColors;
 let commands = [
   "critical",
   "error",
-  "success",
   "warning",
   "warn",
   "important",
@@ -20,17 +19,18 @@ let commands = [
   "notice",
   "log",
   "debug",
-  "status"
+  "status",
+  "success"
 ];
 
 const commandTest = command => {
-  let message = `${command} message`;
+  let message = `${command} class message`;
   let tests = [
     [message, "", false, message],
     [message, command, false, command],
     [message, command.toUpperCase(), false, command.toUpperCase()],
-    [message, "TEST_LABEL", false, messageColor[command].fg],
-    [message, "TEST_LABEL", false, messageColor[command].bg],
+    [message, "TEST_LABEL_FG", false, messageColor[command].fg],
+    [message, "TEST_LABEL_BG", false, messageColor[command].bg],
     [message, "", true, icons[command]]
   ];
 
