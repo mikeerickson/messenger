@@ -15,7 +15,6 @@ if (windowSize === undefined) {
 }
 
 const messageColors = {
-  reset: "\u001b[39m",
   critical: { fg: "38m", bg: "48m" },
   error: { fg: "31m", bg: "41m" },
   success: { fg: "32m", bg: "42m" },
