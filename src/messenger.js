@@ -145,9 +145,10 @@ class Messenger {
   writeToLog(type = "", args) {
     if (this.logToFile) {
       if (this.methods.includes(type)) {
-        this.logger[type](stripAnsi(args).replace(/\n/gi, " - "));
+        return this.logger[type](stripAnsi(args).replace(/\n/gi, " - "));
       }
     }
+    return "";
   }
   /**
    * critical
@@ -169,8 +170,18 @@ class Messenger {
     if (this !== undefined) {
       this.writeToLog("critical", output);
     }
-
     return output;
+  }
+
+  /**
+   * loggerCritical
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerCritical(msg) {
+    return this.writeToLog("critical", msg);
   }
   /**
    * error
@@ -191,6 +202,16 @@ class Messenger {
       this.writeToLog("error", output);
     }
     return output;
+  }
+  /**
+   * loggerError
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerError(msg) {
+    return this.writeToLog("error", msg);
   }
   /**
    * success
@@ -214,6 +235,16 @@ class Messenger {
     return output;
   }
   /**
+   * loggerSuccess
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerSuccess(msg) {
+    return this.writeToLog("success", msg);
+  }
+  /**
    * warning
    *
    * @param {*} msg
@@ -232,6 +263,16 @@ class Messenger {
       this.writeToLog("warning", output);
     }
     return output;
+  }
+  /**
+   * loggerWarning
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerWarning(msg) {
+    return this.writeToLog("warning", msg);
   }
   /**
    * warn
@@ -254,6 +295,16 @@ class Messenger {
     return output;
   }
   /**
+   * loggerWarn
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerWarn(msg) {
+    return this.writeToLog("warn", msg);
+  }
+  /**
    * important
    *
    * @param {*} msg
@@ -272,6 +323,16 @@ class Messenger {
       this.writeToLog("important", output);
     }
     return output;
+  }
+  /**
+   * loggerImportant
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerImportant(msg) {
+    return this.writeToLog("important", msg);
   }
   /**
    * info
@@ -294,6 +355,16 @@ class Messenger {
     return output;
   }
   /**
+   * loggerInfo
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerInfo(msg) {
+    return this.writeToLog("info", msg);
+  }
+  /**
    * debug
    *
    * @param {*} msg
@@ -312,6 +383,16 @@ class Messenger {
       this.writeToLog("debug", output);
     }
     return output;
+  }
+  /**
+   * loggerDebug
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerDebug(msg) {
+    return this.writeToLog("debug", msg);
   }
   /**
    * log
@@ -334,6 +415,16 @@ class Messenger {
     return output;
   }
   /**
+   * loggerLog
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerLog(msg) {
+    return this.writeToLog("log", msg);
+  }
+  /**
    * status
    *
    * @param {*} msg
@@ -352,6 +443,16 @@ class Messenger {
       this.writeToLog("status", output);
     }
     return output;
+  }
+  /**
+   * loggerStatus
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerStatus(msg) {
+    return this.writeToLog("status", msg);
   }
   /**
    * notice
@@ -374,6 +475,16 @@ class Messenger {
     return output;
   }
   /**
+   * loggerNotice
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerNotice(msg) {
+    return this.writeToLog("notice", msg);
+  }
+  /**
    * notice
    *
    * @param {*} msg
@@ -394,6 +505,16 @@ class Messenger {
       this.writeToLog("note", output);
     }
     return output;
+  }
+  /**
+   * loggerNote
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerNote(msg) {
+    return this.writeToLog("note", msg);
   }
   /**
    * processing

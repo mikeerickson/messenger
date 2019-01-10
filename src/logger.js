@@ -128,6 +128,7 @@ Logger.prototype.write = function(data) {
   this.fs.appendFileSync(this.file, data, function(err) {
     if (err) throw err;
   });
+  return data;
 };
 Logger.prototype.methods = function() {
   return [
@@ -141,7 +142,8 @@ Logger.prototype.methods = function() {
     "notice",
     "note",
     "debug",
-    "log"
+    "log",
+    "status"
   ];
 };
 /**
@@ -149,84 +151,84 @@ Logger.prototype.methods = function() {
  * @param {string} message The message to be written
  */
 Logger.prototype.critical = function(message) {
-  this.write(this.format("CRITICAL", message) + this.EOL);
+  return this.write(this.format("CRITICAL", message) + this.EOL);
 };
 /**
  * Prints an error log message
  * @param {string} message The message to be written
  */
 Logger.prototype.error = function(message) {
-  this.write(this.format("ERROR", message) + this.EOL);
+  return this.write(this.format("ERROR", message) + this.EOL);
 };
 /**
  * Prints a notice log message
  * @param {string} message The message to be written
  */
 Logger.prototype.notice = function(message) {
-  this.write(this.format("NOTICE", message) + this.EOL);
+  return this.write(this.format("NOTICE", message) + this.EOL);
 };
 /**
  * Prints a note log message
  * @param {string} message The message to be written
  */
 Logger.prototype.note = function(message) {
-  this.write(this.format("NOTE", message) + this.EOL);
+  return this.write(this.format("NOTE", message) + this.EOL);
 };
 /**
  * Prints a status log message
  * @param {string} message The message to be written
  */
 Logger.prototype.status = function(message) {
-  this.write(this.format("STATUS", message) + this.EOL);
+  return this.write(this.format("STATUS", message) + this.EOL);
 };
 /**
  * Prints a success log message
  * @param {string} message The message to be written
  */
 Logger.prototype.success = function(message) {
-  this.write(this.format("SUCCESS", message) + this.EOL);
+  return this.write(this.format("SUCCESS", message) + this.EOL);
 };
 /**
  * Prints a standard log message
  * @param {string} message The message to be written
  */
 Logger.prototype.log = function(message) {
-  this.write(this.format("LOG", message) + this.EOL);
+  return this.write(this.format("LOG", message) + this.EOL);
 };
 /**
  * Prints an info log message
  * @param {string} message The message to be written
  */
 Logger.prototype.info = function(message) {
-  this.write(this.format("INFO", message) + this.EOL);
+  return this.write(this.format("INFO", message) + this.EOL);
 };
 /**
  * Prints an important log message
  * @param {string} message The message to be written
  */
 Logger.prototype.important = function(message) {
-  this.write(this.format("IMPORTANT", message) + this.EOL);
+  return this.write(this.format("IMPORTANT", message) + this.EOL);
 };
 /**
  * Prints a warning log message
  * @param {string} message The message to be printed
  */
 Logger.prototype.warning = function(message) {
-  this.write(this.format("WARNING", message) + this.EOL);
+  return this.write(this.format("WARNING", message) + this.EOL);
 };
 /**
  * Prints a warning log message
  * @param {string} message The message to be printed
  */
 Logger.prototype.warn = function(message) {
-  this.write(this.format("WARN", message) + this.EOL);
+  return this.write(this.format("WARN", message) + this.EOL);
 };
 /**
  * Prints a warning log message
  * @param {string} message The message to be printed
  */
 Logger.prototype.debug = function(message) {
-  this.write(this.format("DEBUG", message) + this.EOL);
+  return this.write(this.format("DEBUG", message) + this.EOL);
 };
 /**
  * Prints a data log message
@@ -234,7 +236,7 @@ Logger.prototype.debug = function(message) {
  */
 /* istanbul ignore next */
 Logger.prototype.data = function(message) {
-  this.write(this.format("DATA", message) + this.EOL);
+  return this.write(this.format("DATA", message) + this.EOL);
 };
 
 module.exports = Logger;
