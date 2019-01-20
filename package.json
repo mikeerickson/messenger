@@ -68,7 +68,6 @@
     "jest-dot-reporter": "1.0.7",
     "jest-extended": "0.11.0",
     "mochawesome": "3.1.1",
-    "pad": "2.2.1",
     "simple-mocha-reporter": "1.0.5",
     "strip-ansi": "5.0.0",
     "window-size": "1.1.1"

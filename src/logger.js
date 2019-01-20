@@ -1,8 +1,10 @@
 /*eslint no-undef: 0*/
 
-const pad = require("pad");
 const os = require("os");
+const path = require("path");
 const fs = require("fs-extra");
+
+const pad = (str = "", len = 0) => str.padEnd(len);
 
 /**
  * @param {object} options Options [optional]
@@ -12,20 +14,15 @@ const fs = require("fs-extra");
 
 /* istanbul ignore next */
 function Logger(options) {
-  // const path = require("path");
-
   let defOptions = { path: "logs", appName: "app" };
   options = Object.assign(defOptions, options);
 
-  const addZero = value => {
-    return value <= 9 ? "0" + value : "" + value;
-  };
+  const addZero = value => (value <= 9 ? "0" + value : "" + value);
 
   const dateStamp = (date = new Date()) => {
     return date.getFullYear() + "-" + addZero(date.getMonth() + 1) + "-" + addZero(date.getDate());
   };
 
-  let path = require("path");
   let folder = options.path ? path.resolve(path.normalize(options.path)) : path.resolve(__dirname);
   if (!fs.existsSync(folder)) {
     fs.mkdirpSync(folder);
@@ -34,13 +31,13 @@ function Logger(options) {
 
   Object.defineProperties(this, {
     fs: {
-      value: require("fs"),
+      value: fs,
       enumerable: false,
       writable: false,
       configurable: false
     },
     EOL: {
-      value: require("os").EOL,
+      value: os.EOL,
       enumerable: false,
       writable: false,
       configurable: false

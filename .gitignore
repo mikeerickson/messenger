@@ -5,3 +5,4 @@ logs/
 *.log
 mochawesome-report
 .nyc_output/
+*.taskpaper
