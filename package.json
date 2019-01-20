@@ -45,6 +45,7 @@
     "bump:minor": "version-bump cli minor",
     "docker:build": "docker build -f docker/Dockerfile -t dev-node .",
     "docker:run": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node ash -l",
+    "docker:test": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node yarn test",
     "format": "prettier --write \"{**/*.js,__tests__/**/*.js}\" --loglevel error",
     "lint": "eslint ./src/**/*.js",
     "test:awesome": "mocha test --reporter mochawesome && open ./mochawesome-report/mochawesome.html",
