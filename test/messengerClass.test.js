@@ -2,7 +2,7 @@ const forEach = require("mocha-each");
 const expect = require("chai").expect;
 
 const print = require("../src/messenger");
-print.initLogger(true, "test", "test.log");
+print.initLogger(true, "logs", "test-messenger");
 let { raw } = require("./testUtils");
 
 const icons = print.icons;

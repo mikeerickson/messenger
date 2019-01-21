@@ -1,6 +1,6 @@
 {
   "name": "@codedungeon/messenger",
-  "version": "0.0.30",
+  "version": "0.2.0",
   "description": "clean node console messaging and logging",
   "license": "MIT",
   "keywords": [
@@ -52,9 +52,12 @@
     "test:coverage": "nyc mocha --reporter=dot",
     "test:jest:full": "jest ./__tests__/*.test.js --notify",
     "test:jest:unit": "jest ./__tests__/*.test.js --reporters jest-dot-reporter --notify",
-    "test:mocha:full": "mocha ./test/*.spec.js",
-    "test:mocha:unit": "mocha ./test/*.spec.js",
-    "test": "yarn run test:mocha:unit",
+    "test:mocha:full": "mocha ./test/*.test.js",
+    "test:mocha:unit": "mocha ./test/*.test.js",
+    "test:logger": "mocha ./test/messengerLogger.test.js",
+    "test:messenger": "mocha ./test/messengerClass.test.js",
+    "test:static": "mocha ./test/messengerStatic.test.js",
+    "test": "yarn run test:messenger && yarn run test:logger && yarn run test:static",
     "test:full": "yarn run test:mocha:unit --growl",
     "test:unit": "yarn run test:mocha:unit --reporter dot",
     "test:ci": "yarn run test:mocha:unit --reporter inverse-dot",

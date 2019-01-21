@@ -105,13 +105,13 @@ describe("Messenger Static", () => {
   describe("Center", () => {
     it("center static", () => {
       expect(typeof center).to.be.equal("function");
-      center(message);
+      center("center");
     });
   });
   describe("Line", () => {
     it("line static", () => {
       expect(typeof line).to.be.equal("function");
-      line(message);
+      line("-");
     });
   });
 });

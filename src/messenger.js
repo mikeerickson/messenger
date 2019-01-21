@@ -6,11 +6,9 @@ const { dd, dump } = require("dumper.js");
 const pkgInfo = require("../package.json");
 let windowSize = require("window-size");
 
-// this is required when message executed in non terminal window
-// such as VSCode code runner
-
 /* istanbul ignore next */
 if (windowSize === undefined) {
+  // this is required when message executed in non terminal window -- such as VSCode code runner
   windowSize = { width: 100 };
 }
 
@@ -128,11 +126,8 @@ class Messenger {
   initLogger(logToFile = false, logDir = "logs", appName = "app") {
     this.logToFile = logToFile;
     this.appName = appName;
-    this.methods = [];
-    if (this.logToFile) {
-      this.logger = new Logger({ path: logDir, appName });
-      this.methods = this.logger.methods();
-    }
+    this.logger = new Logger({ path: logDir, appName });
+    this.methods = this.logger.methods();
   }
   /* istanbul ignore next */
   /**
@@ -142,8 +137,8 @@ class Messenger {
    * @param {*} args
    * @memberof Messenger
    */
-  writeToLog(type = "", args) {
-    if (this.logToFile) {
+  writeToLog(type = "", args, forceLogToFile = false) {
+    if (this.logToFile || forceLogToFile) {
       if (this.methods.includes(type)) {
         return this.logger[type](stripAnsi(args).replace(/\n/gi, " - "));
       }
@@ -181,7 +176,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerCritical(msg) {
-    return this.writeToLog("critical", msg);
+    return this.writeToLog("critical", msg, true);
   }
   /**
    * error
@@ -211,7 +206,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerError(msg) {
-    return this.writeToLog("error", msg);
+    return this.writeToLog("error", msg, true);
   }
   /**
    * success
@@ -242,7 +237,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerSuccess(msg) {
-    return this.writeToLog("success", msg);
+    return this.writeToLog("success", msg, true);
   }
   /**
    * warning
@@ -272,7 +267,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerWarning(msg) {
-    return this.writeToLog("warning", msg);
+    return this.writeToLog("warning", msg, true);
   }
   /**
    * warn
@@ -302,7 +297,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerWarn(msg) {
-    return this.writeToLog("warn", msg);
+    return this.writeToLog("warn", msg, true);
   }
   /**
    * important
@@ -332,7 +327,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerImportant(msg) {
-    return this.writeToLog("important", msg);
+    return this.writeToLog("important", msg, true);
   }
   /**
    * info
@@ -362,7 +357,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerInfo(msg) {
-    return this.writeToLog("info", msg);
+    return this.writeToLog("info", msg, true);
   }
   /**
    * debug
@@ -392,7 +387,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerDebug(msg) {
-    return this.writeToLog("debug", msg);
+    return this.writeToLog("debug", msg, true);
   }
   /**
    * log
@@ -422,7 +417,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerLog(msg) {
-    return this.writeToLog("log", msg);
+    return this.writeToLog("log", msg, true);
   }
   /**
    * status
@@ -452,7 +447,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerStatus(msg) {
-    return this.writeToLog("status", msg);
+    return this.writeToLog("status", msg, true);
   }
   /**
    * notice
@@ -482,7 +477,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerNotice(msg) {
-    return this.writeToLog("notice", msg);
+    return this.writeToLog("notice", msg, true);
   }
   /**
    * notice
@@ -514,7 +509,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerNote(msg) {
-    return this.writeToLog("note", msg);
+    return this.writeToLog("note", msg, true);
   }
   /**
    * processing
@@ -645,7 +640,7 @@ class Messenger {
   line(msg = "") {
     let output = msg;
     if (windowSize !== undefined) {
-      output = msg.repeat(windowSize.width, msg);
+      output = msg.repeat(windowSize.width-2, msg);
     }
     print(output);
     return output;

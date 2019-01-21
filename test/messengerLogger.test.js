@@ -1,7 +1,12 @@
 const m = require("../src/messenger");
 const expect = require("chai").expect;
 
-m.initLogger(true, "logs", "test");
+/** Logger Configuration
+ * by default, logger is off for console messages
+ * but we need to still define logger settings
+ * you can use the `force` parameter to send data to log file
+ */
+m.initLogger(false, "logs", "test-logger");
 
 let commands = [
   "loggerCritical",
@@ -22,6 +27,7 @@ describe("Messenger Class: Logger", () => {
   it("should log critical", done => {
     let msg = "critical logger message";
     let result = m.loggerCritical(msg);
+
     expect(result).to.contain(msg);
     expect(commands.includes("loggerCritical")).to.be.true;
     done();
