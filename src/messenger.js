@@ -4,8 +4,13 @@ const Logger = require("./logger");
 const stripAnsi = require("strip-ansi");
 const { dd, dump } = require("dumper.js");
 const pkgInfo = require("../package.json");
+const { format, getMilliseconds } = require("date-fns");
+
 let windowSize = require("window-size");
 
+const padZero = (num = 0, size = 3) => {
+  return ("000000000" + num).substr(-size);
+};
 /* istanbul ignore next */
 if (windowSize === undefined) {
   // this is required when message executed in non terminal window -- such as VSCode code runner
@@ -532,74 +537,11 @@ class Messenger {
    */
   /* istanbul ignore next */
   timestamp(useAMPM = false, showSeconds = true, showMicro = false) {
-    return this.formatDate(new Date(), useAMPM, showSeconds, showMicro);
-  }
-  /**
-   * formatDate
-   *
-   * @param {string} [date=""]
-   * @param {boolean} [useAMPM=true]
-   * @param {boolean} [showSeconds=true]
-   * @param {boolean} [showMicro=false]
-   * @returns
-   * @memberof Messenger
-   */
-  /* istanbul ignore next */
-  formatDate(date = "", useAMPM = true, showSeconds = true, showMicro = false) {
-    // ==================================================================
-    // convert nulls to default params
-    // ==================================================================
-    if (!useAMPM) {
-      useAMPM = false;
-    }
-    if (!showSeconds) {
-      showSeconds = false;
-    }
-    if (!showMicro) {
-      showMicro = false;
-    }
-
-    // ==================================================================
-    showMicro = useAMPM ? false : showMicro;
-    showSeconds = showMicro ? true : showSeconds;
-
-    date = date === "" || date === null ? (date = new Date()) : date;
-
-    // build time
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-    let micro = date.getMilliseconds();
-    let ampm = "";
-
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    if (showSeconds) {
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      seconds = ":" + seconds;
-    } else {
-      seconds = "";
-    }
-    if (useAMPM) {
-      ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      hours = hours < 10 ? "0" + hours : hours;
-    }
-
-    micro = showMicro && !useAMPM ? "." + micro : "";
-    micro = useAMPM ? "" : micro;
-
-    let strTime = `${hours}:${minutes}${seconds}${micro} ${ampm}`;
-
-    // build date
-    let month = date.getMonth() + 1;
-    month = month < 10 ? "0" + month : month;
-    let day = date.getDate();
-    day = day < 10 ? "0" + day : day;
-
-    let strDate = `${date.getFullYear()}-${month}-${day}`;
-    return `${strDate} ${strTime}`;
+    let tsd = new Date();
+    let tsFormat = showSeconds ? "yyyy-MM-dd HH:mm:ss" : "yyyy-MM-dd HH:mm";
+    tsFormat = useAMPM ? tsFormat + " a" : tsFormat;
+    let ms = showMicro && !useAMPM ? "." + padZero(getMilliseconds(tsd), 3) : "";
+    return format(tsd, tsFormat) + ms;
   }
   /**
    * terminalInfo
@@ -640,7 +582,7 @@ class Messenger {
   line(msg = "") {
     let output = msg;
     if (windowSize !== undefined) {
-      output = msg.repeat(windowSize.width-2, msg);
+      output = msg.repeat(windowSize.width - 2, msg);
     }
     print(output);
     return output;
