@@ -4,8 +4,6 @@ const os = require("os");
 const path = require("path");
 const fs = require("fs-extra");
 
-const pad = (str = "", len = 0) => str.padEnd(len);
-
 /**
  * @param {object} options Options [optional]
  * @param {string} options.path Desired path to the folder [optional] Default: __dirname
@@ -112,8 +110,8 @@ const formatDate = (date = new Date(), useAMPM = true, showSeconds = true, showM
 
 /* istanbul ignore next */
 Logger.prototype.format = (logLevel = "log", logMsg = "") => {
-  let ts = pad(formatDate(new Date(), false), 21);
-  let level = pad(logLevel.toUpperCase(), 10);
+  let ts = formatDate(new Date(), false).padEnd(21);
+  let level = logLevel.toUpperCase().padEnd(10);
   return `${ts} | ${level} | ${logMsg}`;
 };
 /**

@@ -23,6 +23,9 @@ describe("Messenger Static", () => {
   let message;
   beforeEach(() => {
     message = "Messenger Static Test";
+
+    // silence actual output
+    process.env.NODE_ENV = "test";
   });
   describe("Miscellaneous", () => {
     it("version returns `pkgInfo.version` property", done => {
@@ -105,13 +108,11 @@ describe("Messenger Static", () => {
   describe("Center", () => {
     it("center static", () => {
       expect(typeof center).to.be.equal("function");
-      center("center");
     });
   });
   describe("Line", () => {
     it("line static", () => {
       expect(typeof line).to.be.equal("function");
-      line("-");
     });
   });
 });

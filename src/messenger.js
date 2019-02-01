@@ -8,6 +8,7 @@ const { format, getMilliseconds } = require("date-fns");
 
 let windowSize = require("window-size");
 
+/* istanbul ignore next */
 const padZero = (num = 0, size = 3) => {
   return ("000000000" + num).substr(-size);
 };
