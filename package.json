@@ -33,7 +33,6 @@
     "jest-extended": "0.11.1",
     "mocha": "5.2.0",
     "mocha-each": "1.2.0",
-    "mochawesome": "3.1.1",
     "nyc": "13.1.0",
     "prettier": "1.16.3",
     "simple-mocha-reporter": "1.0.5"
@@ -45,28 +44,25 @@
     }
   },
   "scripts": {
-    "bump": "yarn run bump:dev",
-    "bump:dev": "version-bump cli pre-release:dev",
-    "bump:patch": "version-bump cli patch",
-    "bump:minor": "version-bump cli minor",
     "docker:build": "docker build -f docker/Dockerfile -t dev-node .",
     "docker:run": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node ash -l",
     "docker:test": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node yarn test:ci",
     "format": "prettier --write \"{**/*.js,__tests__/**/*.js}\" --loglevel error",
     "lint": "eslint ./src/**/*.js",
-    "test:awesome": "mocha test --reporter mochawesome && open ./mochawesome-report/mochawesome.html",
     "test:coverage": "nyc mocha --reporter=dot",
     "test:jest:full": "jest ./__tests__/*.test.js --notify",
     "test:jest:unit": "jest ./__tests__/*.test.js --reporters jest-dot-reporter --notify",
     "test:logger": "mocha ./test/messengerLogger.test.js",
-    "test:messenger": "mocha ./test/messengerClass.test.js",
-    "test:static": "mocha ./test/messengerStatic.test.js",
+    "test:messenger": "mocha ./test/messengerClass.test.js --reporter spec",
+    "test:static": "mocha ./test/messengerStatic.test.js --reporter spec",
     "test": "yarn run test:messenger && yarn run test:logger && yarn run test:static",
     "test:full": "mocha \"test/**/*.test.js\" --reporter spec --growl",
-    "test:unit": "yarn run test:mocha:unit --reporter dot",
+    "test:unit": "yarn run test:messenger && yarn run test:static && yarn run test:static",
     "test:ci": "./node_modules/.bin/mocha \"test/**/*.test.js\"",
+    "test:watch": "./node_modules/.bin/mocha \"test/**/*.test.js\" --watch",
     "test:stress": "./scripts/stress-test.js",
-    "pre-commit": "yarn run test:ci && yarn run lint"
+    "pc": "yarn run pre-commit",
+    "pre-commit": "yarn run test:ci && yarn run format && yarn run lint"
   },
   "dependencies": {
     "chalk": "2.4.2",
