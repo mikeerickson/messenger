@@ -1,46 +1,46 @@
-const os = require("os");
-const colors = require("chalk");
-const Logger = require("./logger");
-const stripAnsi = require("strip-ansi");
-const { dd, dump } = require("dumper.js");
-const pkgInfo = require("../package.json");
-const { format, getMilliseconds } = require("date-fns");
+const os = require('os')
+const colors = require('chalk')
+const Logger = require('./logger')
+const stripAnsi = require('strip-ansi')
+const { dd, dump } = require('dumper.js')
+const pkgInfo = require('../package.json')
+const { format, getMilliseconds } = require('date-fns')
 
-let windowSize = require("window-size");
+let windowSize = require('window-size')
 
 /* istanbul ignore next */
 const padZero = (num = 0, size = 3) => {
-  return ("000000000" + num).substr(-size);
-};
+  return ('000000000' + num).substr(-size)
+}
 /* istanbul ignore next */
 if (windowSize === undefined) {
   // this is required when message executed in non terminal window -- such as VSCode code runner
-  windowSize = { width: 100 };
+  windowSize = { width: 100 }
 }
 
 const messageColors = {
-  critical: { fg: "38m", bg: "48m" },
-  error: { fg: "31m", bg: "41m" },
-  success: { fg: "32m", bg: "42m" },
-  warn: { fg: "33m", bg: "43m" },
-  warning: { fg: "33m", bg: "43m" },
-  info: { fg: "36m", bg: "46m" },
-  debug: { fg: "90m", bg: "48m" },
-  log: { fg: "37m", bg: "47m" },
-  note: { fg: "38m", bg: "48m" },
-  notice: { fg: "34m", bg: "44m" },
-  important: { fg: "33m", bg: "43m" },
-  status: { fg: "35m", bg: "45m" }
-};
+  critical: { fg: '38m', bg: '48m' },
+  error: { fg: '31m', bg: '41m' },
+  success: { fg: '32m', bg: '42m' },
+  warn: { fg: '33m', bg: '43m' },
+  warning: { fg: '33m', bg: '43m' },
+  info: { fg: '36m', bg: '46m' },
+  debug: { fg: '90m', bg: '48m' },
+  log: { fg: '37m', bg: '47m' },
+  note: { fg: '38m', bg: '48m' },
+  notice: { fg: '34m', bg: '44m' },
+  important: { fg: '33m', bg: '43m' },
+  status: { fg: '35m', bg: '45m' }
+}
 
 /* istanbul ignore next */
-if (os.platform() === "linux") {
-  messageColors.critical.fg = "001b[91m";
-  messageColors.critical.bg = "001b[101m";
-  messageColors.note.fg = "001b[93m";
-  messageColors.note.bg = "001b[103m";
-  messageColors.debug.fg = "001b[90m";
-  messageColors.debug.bg = "001b[47m";
+if (os.platform() === 'linux') {
+  messageColors.critical.fg = '001b[91m'
+  messageColors.critical.bg = '001b[101m'
+  messageColors.note.fg = '001b[93m'
+  messageColors.note.bg = '001b[103m'
+  messageColors.debug.fg = '001b[90m'
+  messageColors.debug.bg = '001b[47m'
 }
 
 /**
@@ -54,8 +54,8 @@ const print = args => {
   // console.log(args);
   // this has been disabled, using jest function mock instead
   /* istanbul ignore next */
-  process.env.NODE_ENV === "test" ? null : console.log(args);
-};
+  process.env.NODE_ENV === 'test' ? null : console.log(args)
+}
 
 /**
  * formatMessage
@@ -65,17 +65,17 @@ const print = args => {
  * @memberof Messenger
  */
 const formatMessage = msg => {
-  let result = msg;
-  if (typeof msg === "object") {
+  let result = msg
+  if (typeof msg === 'object') {
     if (Array.isArray(msg)) {
-      result = msg.toString().replace(/,/gi, " ");
+      result = msg.toString().replace(/,/gi, ' ')
     } else {
-      result = JSON.stringify(msg);
-      result = result.replace(/,/gi, ", ").replace(/:/gi, ": ");
+      result = JSON.stringify(msg)
+      result = result.replace(/,/gi, ', ').replace(/:/gi, ': ')
     }
   }
-  return result;
-};
+  return result
+}
 
 /**
  * Messenger
@@ -92,24 +92,24 @@ class Messenger {
    * @memberof Messenger
    */
   constructor() {
-    this.logToFile = false;
-    this.appName = "app";
-    this.messageColors = messageColors;
+    this.logToFile = false
+    this.appName = 'app'
+    this.messageColors = messageColors
     this.icons = {
-      critical: "🚫",
-      error: "✖",
-      success: "✔",
-      warn: "⚠️",
-      warning: "⚠️",
-      info: "⌽",
-      info_alt: "💡",
-      important: "★",
-      status: "◯",
-      notice: "◉",
-      note: "◉",
-      log: "⇢",
-      debug: "◼"
-    };
+      critical: '🚫',
+      error: '✖',
+      success: '✔',
+      warn: '⚠️',
+      warning: '⚠️',
+      info: '⌽',
+      info_alt: '💡',
+      important: '★',
+      status: '◯',
+      notice: '◉',
+      note: '◉',
+      log: '⇢',
+      debug: '◼'
+    }
   }
   /**
    * version
@@ -118,7 +118,7 @@ class Messenger {
    * @memberof Messenger
    */
   version() {
-    return pkgInfo.version;
+    return pkgInfo.version
   }
   /* istanbul ignore next */
   /**
@@ -129,11 +129,11 @@ class Messenger {
    * @param {string} [appName="app"]
    * @memberof Messenger
    */
-  initLogger(logToFile = false, logDir = "logs", appName = "app") {
-    this.logToFile = logToFile;
-    this.appName = appName;
-    this.logger = new Logger({ path: logDir, appName });
-    this.methods = this.logger.methods();
+  initLogger(logToFile = false, logDir = 'logs', appName = 'app') {
+    this.logToFile = logToFile
+    this.appName = appName
+    this.logger = new Logger({ path: logDir, appName })
+    this.methods = this.logger.methods()
   }
   /* istanbul ignore next */
   /**
@@ -143,13 +143,13 @@ class Messenger {
    * @param {*} args
    * @memberof Messenger
    */
-  writeToLog(type = "", args, forceLogToFile = false) {
+  writeToLog(type = '', args, forceLogToFile = false) {
     if (this.logToFile || forceLogToFile) {
       if (this.methods.includes(type)) {
-        return this.logger[type](stripAnsi(args).replace(/\n/gi, " - "));
+        return this.logger[type](stripAnsi(args).replace(/\n/gi, ' - '))
       }
     }
-    return "";
+    return ''
   }
   /**
    * critical
@@ -160,18 +160,18 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  critical(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.critical + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgKeyword("orangered").black(label)}${label ? " " : ""}${icon}${colors.keyword(
-      "orangered"
-    )(msg)}`;
-    print(output);
+  critical(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.critical + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgKeyword('orangered').black(label)}${label ? ' ' : ''}${icon}${colors.keyword(
+      'orangered'
+    )(msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("critical", output);
+      this.writeToLog('critical', output)
     }
-    return output;
+    return output
   }
 
   /**
@@ -182,7 +182,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerCritical(msg) {
-    return this.writeToLog("critical", msg, true);
+    return this.writeToLog('critical', msg, true)
   }
   /**
    * error
@@ -193,16 +193,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  error(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.error + " " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgRed.black(label)}${label ? " " : ""}${colors.red(icon + msg)}`;
-    print(output);
+  error(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.error + ' ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("error", output);
+      this.writeToLog('error', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerError
@@ -212,7 +212,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerError(msg) {
-    return this.writeToLog("error", msg, true);
+    return this.writeToLog('error', msg, true)
   }
   /**
    * success
@@ -223,17 +223,17 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  success(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.success + " " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgGreen.black(label)}${label ? " " : ""}${colors.green(icon + msg)}`;
+  success(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.success + ' ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgGreen.black(label)}${label ? ' ' : ''}${colors.green(icon + msg)}`
 
-    print(output);
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("success", output);
+      this.writeToLog('success', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerSuccess
@@ -243,7 +243,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerSuccess(msg) {
-    return this.writeToLog("success", msg, true);
+    return this.writeToLog('success', msg, true)
   }
   /**
    * warning
@@ -254,16 +254,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  warning(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.warning + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
-    print(output);
+  warning(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.warning + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("warning", output);
+      this.writeToLog('warning', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerWarning
@@ -273,7 +273,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerWarning(msg) {
-    return this.writeToLog("warning", msg, true);
+    return this.writeToLog('warning', msg, true)
   }
   /**
    * warn
@@ -284,16 +284,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  warn(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.warn + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
-    print(output);
+  warn(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.warn + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("warn", output);
+      this.writeToLog('warn', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerWarn
@@ -303,7 +303,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerWarn(msg) {
-    return this.writeToLog("warn", msg, true);
+    return this.writeToLog('warn', msg, true)
   }
   /**
    * important
@@ -314,16 +314,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  important(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.important + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgYellow.black(label)}${label ? " " : ""}${colors.yellow(icon + msg)}`;
-    print(output);
+  important(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.important + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("important", output);
+      this.writeToLog('important', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerImportant
@@ -333,7 +333,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerImportant(msg) {
-    return this.writeToLog("important", msg, true);
+    return this.writeToLog('important', msg, true)
   }
   /**
    * info
@@ -344,16 +344,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  info(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.info + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgCyan.black(label)}${label ? " " : ""}${colors.cyan(icon + msg)}`;
-    print(output);
+  info(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.info + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgCyan.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("info", output);
+      this.writeToLog('info', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerInfo
@@ -363,7 +363,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerInfo(msg) {
-    return this.writeToLog("info", msg, true);
+    return this.writeToLog('info', msg, true)
   }
   /**
    * debug
@@ -374,16 +374,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  debug(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.debug + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgKeyword("darkgray").black(label)}${label ? " " : ""}${colors.gray(icon + msg)}`;
-    print(output);
+  debug(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.debug + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgKeyword('darkgray').black(label)}${label ? ' ' : ''}${colors.gray(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("debug", output);
+      this.writeToLog('debug', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerDebug
@@ -393,7 +393,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerDebug(msg) {
-    return this.writeToLog("debug", msg, true);
+    return this.writeToLog('debug', msg, true)
   }
   /**
    * log
@@ -404,16 +404,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  log(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.log + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgWhite.black(label)}${label ? " " : ""}${colors.white(icon + msg)}`;
-    print(output);
+  log(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.log + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgWhite.black(label)}${label ? ' ' : ''}${colors.white(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("log", output);
+      this.writeToLog('log', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerLog
@@ -423,7 +423,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerLog(msg) {
-    return this.writeToLog("log", msg, true);
+    return this.writeToLog('log', msg, true)
   }
   /**
    * status
@@ -434,16 +434,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  status(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.status + "  " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgMagenta.black(label)}${label ? " " : ""}${colors.magenta(icon + msg)}`;
-    print(output);
+  status(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.status + '  ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgMagenta.black(label)}${label ? ' ' : ''}${colors.magenta(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("status", output);
+      this.writeToLog('status', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerStatus
@@ -453,7 +453,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerStatus(msg) {
-    return this.writeToLog("status", msg, true);
+    return this.writeToLog('status', msg, true)
   }
   /**
    * notice
@@ -464,16 +464,16 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  notice(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.notice + " " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgBlue.black(label)}${label ? " " : ""}${colors.blue(icon + msg)}`;
-    print(output);
+  notice(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.notice + ' ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgBlue.black(label)}${label ? ' ' : ''}${colors.blue(icon + msg)}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("notice", output);
+      this.writeToLog('notice', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerNotice
@@ -483,7 +483,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerNotice(msg) {
-    return this.writeToLog("notice", msg, true);
+    return this.writeToLog('notice', msg, true)
   }
   /**
    * notice
@@ -494,18 +494,18 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  note(msg, label = "", showIcon = false) {
-    label = label ? " " + label + " " : "";
-    let icon = showIcon ? this.icons.note + " " : "";
-    msg = formatMessage(msg);
-    let output = `${colors.bgKeyword("orange").black(label)}${label ? " " : ""}${colors.keyword("orange")(
+  note(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.note + ' ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgKeyword('orange').black(label)}${label ? ' ' : ''}${colors.keyword('orange')(
       icon + msg
-    )}`;
-    print(output);
+    )}`
+    print(output)
     if (this !== undefined) {
-      this.writeToLog("note", output);
+      this.writeToLog('note', output)
     }
-    return output;
+    return output
   }
   /**
    * loggerNote
@@ -515,7 +515,7 @@ class Messenger {
    * @memberof Messenger
    */
   loggerNote(msg) {
-    return this.writeToLog("note", msg, true);
+    return this.writeToLog('note', msg, true)
   }
   /**
    * processing
@@ -525,7 +525,7 @@ class Messenger {
    */
   /* istanbul ignore next */
   processing(msg) {
-    console.log(colors.yellow(msg));
+    console.log(colors.yellow(msg))
   }
   /**
    * timestamp
@@ -538,11 +538,11 @@ class Messenger {
    */
   /* istanbul ignore next */
   timestamp(useAMPM = false, showSeconds = true, showMicro = false) {
-    let tsd = new Date();
-    let tsFormat = showSeconds ? "yyyy-MM-dd HH:mm:ss" : "yyyy-MM-dd HH:mm";
-    tsFormat = useAMPM ? tsFormat + " a" : tsFormat;
-    let ms = showMicro && !useAMPM ? "." + padZero(getMilliseconds(tsd), 3) : "";
-    return format(tsd, tsFormat) + ms;
+    let tsd = new Date()
+    let tsFormat = showSeconds ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd HH:mm'
+    tsFormat = useAMPM ? tsFormat + ' a' : tsFormat
+    let ms = showMicro && !useAMPM ? '.' + padZero(getMilliseconds(tsd), 3) : ''
+    return format(tsd, tsFormat) + ms
   }
   /**
    * terminalInfo
@@ -551,7 +551,7 @@ class Messenger {
    * @memberof Messenger
    */
   terminalInfo() {
-    return windowSize;
+    return windowSize
   }
   /**
    * dd (die dump)
@@ -561,7 +561,7 @@ class Messenger {
    */
   /* istanbul ignore next */
   dd(...data) {
-    dd(data);
+    dd(data)
   }
   /**
    * dump
@@ -571,7 +571,7 @@ class Messenger {
    */
   /* istanbul ignore next */
   dump(...data) {
-    dump(data);
+    dump(data)
   }
   /**
    * line
@@ -580,13 +580,13 @@ class Messenger {
    * @memberof Messenger
    */
   /* istanbul ignore next */
-  line(msg = "") {
-    let output = msg;
+  line(msg = '') {
+    let output = msg
     if (windowSize !== undefined) {
-      output = msg.repeat(windowSize.width - 2, msg);
+      output = msg.repeat(windowSize.width - 2, msg)
     }
-    print(output);
-    return output;
+    print(output)
+    return output
   }
   /**
    * center
@@ -596,18 +596,18 @@ class Messenger {
    * @memberof Messenger
    */
   /* istanbul ignore next */
-  center(msg = "", fillText = " ") {
+  center(msg = '', fillText = ' ') {
     // if the terminal width is shorter than message length, dont display fillText
-    let width = windowSize === undefined ? 100 : windowSize.width;
+    let width = windowSize === undefined ? 100 : windowSize.width
     if (stripAnsi(msg).length >= width) {
-      print(msg);
-      return msg;
+      print(msg)
+      return msg
     } else {
-      let left = parseInt((width - stripAnsi(msg).length) / 2, 10);
-      let padStr = fillText.repeat(left / stripAnsi(fillText).length);
-      let output = padStr + msg + padStr;
-      print(output);
-      return output;
+      let left = parseInt((width - stripAnsi(msg).length) / 2, 10)
+      let padStr = fillText.repeat(left / stripAnsi(fillText).length)
+      let output = padStr + msg + padStr
+      print(output)
+      return output
     }
   }
   /**
@@ -617,29 +617,29 @@ class Messenger {
    * @memberof Messenger
    */
   getIcons() {
-    return this.icons;
+    return this.icons
   }
 }
 
 // export all methods so they call be used statically
-exports.critical = new Messenger().critical;
-exports.error = new Messenger().error;
-exports.success = new Messenger().success;
-exports.warning = new Messenger().warning;
-exports.warn = new Messenger().warn;
-exports.important = new Messenger().important;
-exports.info = new Messenger().info;
-exports.notice = new Messenger().notice;
-exports.status = new Messenger().status;
-exports.debug = new Messenger().debug;
-exports.log = new Messenger().log;
-exports.dd = new Messenger().dd;
-exports.dump = new Messenger().dump;
-exports.terminalInfo = new Messenger().terminalInfo;
-exports.center = new Messenger().center;
-exports.line = new Messenger().line;
-exports.icons = new Messenger().icons;
-exports.getIcons = new Messenger().getIcons;
-exports.messageColors = new Messenger().messageColors;
+exports.critical = new Messenger().critical
+exports.error = new Messenger().error
+exports.success = new Messenger().success
+exports.warning = new Messenger().warning
+exports.warn = new Messenger().warn
+exports.important = new Messenger().important
+exports.info = new Messenger().info
+exports.notice = new Messenger().notice
+exports.status = new Messenger().status
+exports.debug = new Messenger().debug
+exports.log = new Messenger().log
+exports.dd = new Messenger().dd
+exports.dump = new Messenger().dump
+exports.terminalInfo = new Messenger().terminalInfo
+exports.center = new Messenger().center
+exports.line = new Messenger().line
+exports.icons = new Messenger().icons
+exports.getIcons = new Messenger().getIcons
+exports.messageColors = new Messenger().messageColors
 
-module.exports = new Messenger();
+module.exports = new Messenger()

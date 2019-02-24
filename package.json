@@ -49,11 +49,9 @@
     "docker:run": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node ash -l",
     "docker:test": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node yarn test:ci",
     "format": "prettier --write \"{**/*.js,__tests__/**/*.js}\" --loglevel error",
-    "lint": "eslint ./src/**/*.js",
+    "lint": "eslint \"./**/*.{ts,js,vue}\" --fix",
     "test:coverage": "nyc mocha --reporter=dot",
-    "test:jest:full": "jest ./__tests__/*.test.js --notify",
-    "test:jest:unit": "jest ./__tests__/*.test.js --reporters jest-dot-reporter --notify",
-    "test:logger": "mocha ./test/messengerLogger.test.js",
+    "test:logger": "mocha ./test/messengerLogger.test.js --reporter spec",
     "test:messenger": "mocha ./test/messengerClass.test.js --reporter spec",
     "test:static": "mocha ./test/messengerStatic.test.js --reporter spec",
     "test": "yarn run test:messenger && yarn run test:logger && yarn run test:static",
@@ -62,7 +60,6 @@
     "test:ci": "./node_modules/.bin/mocha \"test/**/*.test.js\"",
     "test:watch": "./node_modules/.bin/mocha \"test/**/*.test.js\" --watch",
     "test:stress": "./scripts/stress-test.js",
-    "pc": "yarn run pre-commit",
     "pre-commit": "yarn run test:ci && yarn run format && yarn run lint"
   },
   "dependencies": {
