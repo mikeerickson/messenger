@@ -408,7 +408,7 @@ class Messenger {
     label = label ? ' ' + label + ' ' : ''
     let icon = showIcon ? this.icons.log + '  ' : ''
     msg = formatMessage(msg)
-    let output = `${colors.bgWhite.black(label)}${label ? ' ' : ''}${colors.white(icon + msg)}`
+    let output = `${colors.bgWhite.black(label)}${label ? ' ' : ''}${icon + msg}`
     print(output)
     if (this !== undefined) {
       this.writeToLog('log', output)
