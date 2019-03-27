@@ -3,6 +3,7 @@
 ## Description
 
 Messenger is a simple node module for display pretting console logs (with lots of formatting options) and support for logging messages to `.log` files (including daily rotation)
+![Screenshot](https://github.com/mikeerickson/messenger/blob/master/docs/messenger-example.png)
 
 ## Install
 
@@ -47,4 +48,4 @@ E-Mail: [codedungeon@gmail.com](mailto:codedungeon@gmail.com)
 
 Twitter: [@codedungeon](http://twitter.com/codedungeon)
 
-Webiste: [codedungeon.io](http://codedungeon.io)
+Website: [codedungeon.io](http://codedungeon.io)
