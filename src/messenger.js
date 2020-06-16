@@ -93,8 +93,22 @@ class Messenger {
    */
   constructor() {
     this.logToFile = false
-    this.appName = 'app'
+    this.appName = '@codedungeon/messenger'
     this.messageColors = messageColors
+    this.methods = [
+      'critical',
+      'debug',
+      'error',
+      'important',
+      'info',
+      'log',
+      'note',
+      'notice',
+      'status',
+      'success',
+      'warn',
+      'warning'
+    ]
     this.icons = {
       critical: '🚫',
       error: '✖',

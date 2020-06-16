@@ -13,8 +13,10 @@
     "peekView.border": "#dadcdd",
     "statusBar.background": "#269f43",
     "statusBarItem.hoverBackground": "#30c854",
-    "statusBar.foreground": "#e7e7e7"
+    "statusBar.foreground": "#e7e7e7",
+    "statusBar.border": "#269f43"
   },
   "mocha.enabled": true,
-  "testExplorer.codeLens": true
+  "testExplorer.codeLens": true,
+  "peacock.color": "#269f43"
 }
