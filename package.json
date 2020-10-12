@@ -21,16 +21,12 @@
     "url": "https://github.com/mikeerickson/messenger"
   },
   "devDependencies": {
-    "@commitlint/cli": "7.5.2",
-    "@commitlint/config-conventional": "7.5.0",
     "babel-eslint": "10.0.1",
     "chai": "4.2.0",
-    "commitlint": "7.5.2",
     "eslint": "5.14.1",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-prettier": "3.0.1",
     "growl": "^1.10.0",
-    "husky": "1.3.1",
     "inverse-dot": "0.1.3",
     "jest": "24.1.0",
     "jest-chain": "1.1.2",
@@ -42,12 +38,6 @@
     "prettier": "1.16.4",
     "simple-mocha-reporter": "1.0.5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run pre-commit",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "scripts": {
     "docker:build": "docker build -f docker/Dockerfile -t dev-node .",
     "docker:run": "docker run  --name messenger -v$(pwd):/usr/code/app:delegated --rm -it dev-node ash -l",
@@ -56,7 +46,7 @@
     "lint": "eslint \"./**/*.{ts,js,vue}\" --fix",
     "test:coverage": "nyc mocha --reporter=dot",
     "test:logger": "mocha ./test/messengerLogger.test.js --reporter spec",
-    "test:messenger": "mocha ./test/messengerClass.test.js --reporter spec",
+    "test:messenger": "mocha ./test/messengerClass.test.js --reporter simple-mocha-reporter",
     "test:static": "mocha ./test/messengerStatic.test.js --reporter spec",
     "test": "npm run test:messenger && npm run test:logger && npm run test:static",
     "test:full": "mocha \"test/**/*.test.js\" --reporter spec --growl && npm run test:example",

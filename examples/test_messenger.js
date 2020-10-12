@@ -51,4 +51,7 @@ messenger.center(colors.magenta('alternate message'))
 console.log('')
 
 messenger.dump('this', 'is', 'a', 'test')
-messenger.dd('this', 'is', 'from', 'die dump (dd)')
+// messenger.dd('this', 'is', 'from', 'die dump (dd)')
+
+messenger.line('-')
+messenger.success('test')
