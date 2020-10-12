@@ -92,11 +92,12 @@ class Messenger {
    * @memberof Messenger
    */
   constructor() {
-    this.logToFile = false
     this.appName = '@codedungeon/messenger'
+    this.logToFile = false
     this.messageColors = messageColors
     this.methods = [
       'critical',
+      'danger',
       'debug',
       'error',
       'important',
@@ -111,6 +112,7 @@ class Messenger {
     ]
     this.icons = {
       critical: '🚫',
+      danger: '🚫',
       error: '✖',
       success: '✔',
       warn: '⚠️',
@@ -133,6 +135,14 @@ class Messenger {
    */
   version() {
     return pkgInfo.version
+  }
+  alert(config = {}) {
+    let alertConfig = this.validateConfig(Object.assign({ type: 'info', msg: '', icon: false }, config))
+    return this[alertConfig.type](alertConfig.msg, alertConfig.label, alertConfig.icon)
+  }
+  print(config = {}) {
+    let alertConfig = this.validateConfig(Object.assign({ type: 'info', msg: '', icon: false }, config))
+    return this[alertConfig.type](alertConfig.msg, alertConfig.label, alertConfig.icon)
   }
   /* istanbul ignore next */
   /**
@@ -210,6 +220,26 @@ class Messenger {
   error(msg, label = '', showIcon = false) {
     label = label ? ' ' + label + ' ' : ''
     let icon = showIcon ? this.icons.error + ' ' : ''
+    msg = formatMessage(msg)
+    let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
+    print(output)
+    if (this !== undefined) {
+      this.writeToLog('error', output)
+    }
+    return output
+  }
+  /**
+   * danger
+   *
+   * @param {*} msg
+   * @param {string} [label=""]
+   * @param {boolean} [showIcon=false]
+   * @returns
+   * @memberof Messenger
+   */
+  danger(msg, label = '', showIcon = false) {
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? this.icons.danger + ' ' : ''
     msg = formatMessage(msg)
     let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
     print(output)
@@ -633,10 +663,20 @@ class Messenger {
   getIcons() {
     return this.icons
   }
+  validateConfig(config = {}) {
+    let finalConfig = Object.assign(config)
+    finalConfig.type = finalConfig.type === '' ? 'info' : finalConfig.type
+    if (!this.methods.includes(finalConfig.type)) {
+      finalConfig.type = 'info'
+    }
+
+    return finalConfig
+  }
 }
 
 // export all methods so they call be used statically
 exports.critical = new Messenger().critical
+exports.danger = new Messenger().danger
 exports.error = new Messenger().error
 exports.success = new Messenger().success
 exports.warning = new Messenger().warning

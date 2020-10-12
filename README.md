@@ -2,7 +2,7 @@
 
 ## Description
 
-Messenger is a simple node module for display pretting console logs (with lots of formatting options) and support for logging messages to `.log` files (including daily rotation)
+Messenger is a simple node module for displaying pretty console logs (with lots of formatting options) and support for logging messages to `.log` files (including daily rotation)
 
 ![Screenshot](https://github.com/mikeerickson/messenger/blob/master/docs/messenger-example.png)
 
@@ -36,16 +36,50 @@ msg.info('info message', showLabels ? 'INFO' : '', showIcons)
 msg.debug('debug message', showLabels ? 'DEBUG' : '', showIcons)
 ```
 
+## Using `alert` helper
+
+You can also invoke any of the Messenger methods using the `alert` helper which accepts an object of options as opposed to passing the 3 separate parameters
+
+Note: This method does **not** support calling statically
+
+```js
+type - default "info"
+msg  - notification message
+icon - default "false"
+
+alert({ type: 'info', msg: 'hello world', icon: false })
+print({ type: 'info', msg: 'hello world', icon: false })
+```
+
+```js
+let msg = 'Hello World'
+messenger.alert({ msg })
+messenger.alert({ type: 'status', msg, label: '', icon: false })
+messenger.alert({ type: 'status', msg, label: 'STATUS', icon: false })
+messenger.alert({ type: 'status', msg, label: 'STATUS', icon: true })
+```
+
+## Using `print` helper (same options as `alert`)
+
+Or, if you choose, you can use the `print` helper
+
+```js
+let msg = 'Hello World'
+messenger.print({ type: 'success', msg })
+messenger.print({ type: 'success', msg, label: 'SUCCESS', icon: false })
+messenger.print({ type: 'success', msg, label: 'SUCCESS', icon: true })
+```
+
 ### License
 
-Copyright &copy; 2019 Mike Erickson
+Copyright &copy; 2019-2021 Mike Erickson
 Released under the MIT license
 
 ### Credits
 
 messenger written by Mike Erickson
 
-E-Mail: [codedungeon@gmail.com](mailto:codedungeon@gmail.com)
+E-Mail: [mike.erickson@codedungeon.io](mailto:mike.erickson@codedungeon.io)
 
 Twitter: [@codedungeon](http://twitter.com/codedungeon)
 

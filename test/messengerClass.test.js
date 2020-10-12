@@ -1,12 +1,12 @@
 const forEach = require('mocha-each')
 const expect = require('chai').expect
 
-const print = require('../src/messenger')
-print.initLogger(true, 'logs', 'test-messenger')
+const Messenger = require('../src/messenger')
+Messenger.initLogger(true, 'logs', 'test-messenger')
 let { raw } = require('./testUtils')
 
-const icons = print.icons
-const messageColor = print.messageColors
+const icons = Messenger.icons
+const messageColor = Messenger.messageColors
 
 let commands = [
   'critical',
@@ -36,7 +36,7 @@ const commandTest = command => {
 
   forEach(tests).it(`.${command}(%s, %s, %s)`, (msg, label, icon, expected) => {
     // executer command
-    let result = print[command](msg, label, icon)
+    let result = Messenger[command](msg, label, icon)
 
     // are we testing against escaped color
     // having trouble getting this to work with vscode mocha runner extension
@@ -61,21 +61,50 @@ describe('Messenger Class', () => {
 
 describe('Messenger Class Utilities', () => {
   it('should confirm icons exists for each method', () => {
-    let icons = print.getIcons()
+    let icons = Messenger.getIcons()
     commands.forEach(command => {
       expect(icons.hasOwnProperty(command)).to.equal(true)
     })
   })
   it('return information about terminal', () => {
-    let terminal = print.terminalInfo()
+    let terminal = Messenger.terminalInfo()
     expect(terminal.hasOwnProperty('width')).to.equal(true)
   })
   it('properly formats message object', () => {
-    let message = print.info({ fname: 'Mike' })
+    let message = Messenger.info({ fname: 'Mike' })
     expect(message).to.contain('Mike')
   })
   it('properly formats message array', () => {
-    let message = print.info(['mike', 'erickson'])
+    let message = Messenger.info(['mike', 'erickson'])
     expect(message).to.contain('mike erickson')
+  })
+  it('should call `alert` helper', () => {
+    let message = Messenger.alert({ type: 'info', msg: 'mike erickson' })
+    expect(message).to.contain('mike erickson')
+  })
+
+  it('should call `alert` helper with label', () => {
+    let message = Messenger.alert({ type: 'info', label: 'INFO', msg: 'mike erickson' })
+    expect(message).to.contain('INFO')
+  })
+
+  it('should call `alert` helper with icon', () => {
+    let message = Messenger.alert({ type: 'info', label: 'INFO', msg: 'mike erickson', icon: true })
+    expect(message).to.contain(icons.info)
+  })
+
+  it('should call `print` helper', () => {
+    let message = Messenger.print({ type: 'info', msg: 'mike erickson' })
+    expect(message).to.contain('mike erickson')
+  })
+
+  it('should call `print` helper with label', () => {
+    let message = Messenger.print({ type: 'info', label: 'INFO', msg: 'mike erickson' })
+    expect(message).to.contain('INFO')
+  })
+
+  it('should call `print` helper with icon', () => {
+    let message = Messenger.print({ type: 'info', label: 'INFO', msg: 'mike erickson', icon: true })
+    expect(message).to.contain(icons.info)
   })
 })
