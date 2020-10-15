@@ -29,8 +29,8 @@ const commandTest = command => {
     [message, '', false, message],
     [message, command, false, command],
     [message, command.toUpperCase(), false, command.toUpperCase()],
-    [message, 'TEST_LABEL_FG', false, messageColor[command].fg],
-    [message, 'TEST_LABEL_BG', false, messageColor[command].bg],
+    [message, 'TEST_LABEL_FG', false, messageColor(command).fg],
+    [message, 'TEST_LABEL_BG', false, messageColor(command).bg],
     [message, '', true, icons[command]]
   ]
 
@@ -51,7 +51,7 @@ const commandTest = command => {
   })
 }
 
-describe('Messenger Class', () => {
+describe.only('Messenger Class', () => {
   commands.forEach(command => {
     describe(`.${command}`, () => {
       commandTest(command)

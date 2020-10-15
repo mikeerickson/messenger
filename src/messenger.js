@@ -5,42 +5,16 @@ const stripAnsi = require('strip-ansi')
 const { dd, dump } = require('dumper.js')
 const pkgInfo = require('../package.json')
 const { format, getMilliseconds } = require('date-fns')
-
+const clearCli = require('cli-clear')
 let windowSize = require('window-size')
+const utils = require('./utils')
 
 /* istanbul ignore next */
-const padZero = (num = 0, size = 3) => {
-  return ('000000000' + num).substr(-size)
-}
+
 /* istanbul ignore next */
 if (windowSize === undefined) {
   // this is required when message executed in non terminal window -- such as VSCode code runner
   windowSize = { width: 100 }
-}
-
-const messageColors = {
-  critical: { fg: '38m', bg: '48m' },
-  error: { fg: '31m', bg: '41m' },
-  success: { fg: '32m', bg: '42m' },
-  warn: { fg: '33m', bg: '43m' },
-  warning: { fg: '33m', bg: '43m' },
-  info: { fg: '36m', bg: '46m' },
-  debug: { fg: '90m', bg: '48m' },
-  log: { fg: '37m', bg: '47m' },
-  note: { fg: '38m', bg: '48m' },
-  notice: { fg: '34m', bg: '44m' },
-  important: { fg: '33m', bg: '43m' },
-  status: { fg: '35m', bg: '45m' }
-}
-
-/* istanbul ignore next */
-if (os.platform() === 'linux') {
-  messageColors.critical.fg = '001b[91m'
-  messageColors.critical.bg = '001b[101m'
-  messageColors.note.fg = '001b[93m'
-  messageColors.note.bg = '001b[103m'
-  messageColors.debug.fg = '001b[90m'
-  messageColors.debug.bg = '001b[47m'
 }
 
 /**
@@ -55,26 +29,6 @@ const print = args => {
   // this has been disabled, using jest function mock instead
   /* istanbul ignore next */
   process.env.NODE_ENV === 'test' ? null : console.log(args)
-}
-
-/**
- * formatMessage
- *
- * @param {*} msg
- * @returns
- * @memberof Messenger
- */
-const formatMessage = msg => {
-  let result = msg
-  if (typeof msg === 'object') {
-    if (Array.isArray(msg)) {
-      result = msg.toString().replace(/,/gi, ' ')
-    } else {
-      result = JSON.stringify(msg)
-      result = result.replace(/,/gi, ', ').replace(/:/gi, ': ')
-    }
-  }
-  return result
 }
 
 /**
@@ -94,7 +48,6 @@ class Messenger {
   constructor() {
     this.appName = '@codedungeon/messenger'
     this.logToFile = false
-    this.messageColors = messageColors
     this.methods = [
       'critical',
       'danger',
@@ -110,22 +63,6 @@ class Messenger {
       'warn',
       'warning'
     ]
-    this.icons = {
-      critical: '🚫',
-      danger: '🚫',
-      error: '✖',
-      success: '✔',
-      warn: '⚠️',
-      warning: '⚠️',
-      info: '⌽',
-      info_alt: '💡',
-      important: '★',
-      status: '◯',
-      notice: '◉',
-      note: '◉',
-      log: '⇢',
-      debug: '◼'
-    }
   }
   /**
    * version
@@ -133,6 +70,15 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
+
+  icons(type) {
+    return utils.icons(type)
+  }
+
+  messageColors(type) {
+    return utils.messageColors(type)
+  }
+
   version() {
     return pkgInfo.version
   }
@@ -175,6 +121,11 @@ class Messenger {
     }
     return ''
   }
+
+  clear() {
+    clearCli()
+  }
+
   /**
    * critical
    *
@@ -185,9 +136,12 @@ class Messenger {
    * @memberof Messenger
    */
   critical(msg, label = '', showIcon = false) {
+    if (utils.object('critical', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.critical + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.critical + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgKeyword('orangered').black(label)}${label ? ' ' : ''}${icon}${colors.keyword(
       'orangered'
     )(msg)}`
@@ -218,9 +172,12 @@ class Messenger {
    * @memberof Messenger
    */
   error(msg, label = '', showIcon = false) {
+    if (utils.object('error', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.error + ' ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.error + ' ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -238,9 +195,12 @@ class Messenger {
    * @memberof Messenger
    */
   danger(msg, label = '', showIcon = false) {
+    if (utils.object('danger', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.danger + ' ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.danger + ' ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -248,6 +208,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerError
    *
@@ -258,6 +219,7 @@ class Messenger {
   loggerError(msg) {
     return this.writeToLog('error', msg, true)
   }
+
   /**
    * success
    *
@@ -268,9 +230,13 @@ class Messenger {
    * @memberof Messenger
    */
   success(msg, label = '', showIcon = false) {
+    if (utils.object('success', msg, label)) {
+      return
+    }
+
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.success + ' ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.success + ' ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgGreen.black(label)}${label ? ' ' : ''}${colors.green(icon + msg)}`
 
     print(output)
@@ -279,6 +245,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerSuccess
    *
@@ -299,9 +266,12 @@ class Messenger {
    * @memberof Messenger
    */
   warning(msg, label = '', showIcon = false) {
+    if (utils.object('warning', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.warning + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.warning + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -309,6 +279,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerWarning
    *
@@ -319,6 +290,7 @@ class Messenger {
   loggerWarning(msg) {
     return this.writeToLog('warning', msg, true)
   }
+
   /**
    * warn
    *
@@ -329,9 +301,12 @@ class Messenger {
    * @memberof Messenger
    */
   warn(msg, label = '', showIcon = false) {
+    if (utils.object('warn', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.warn + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.warn + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -339,6 +314,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerWarn
    *
@@ -349,6 +325,7 @@ class Messenger {
   loggerWarn(msg) {
     return this.writeToLog('warn', msg, true)
   }
+
   /**
    * important
    *
@@ -359,9 +336,12 @@ class Messenger {
    * @memberof Messenger
    */
   important(msg, label = '', showIcon = false) {
+    if (utils.object('important', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.important + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.important + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -369,6 +349,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerImportant
    *
@@ -379,6 +360,7 @@ class Messenger {
   loggerImportant(msg) {
     return this.writeToLog('important', msg, true)
   }
+
   /**
    * info
    *
@@ -389,9 +371,12 @@ class Messenger {
    * @memberof Messenger
    */
   info(msg, label = '', showIcon = false) {
+    if (utils.object('info', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.info + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.info + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgCyan.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -399,6 +384,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerInfo
    *
@@ -409,6 +395,7 @@ class Messenger {
   loggerInfo(msg) {
     return this.writeToLog('info', msg, true)
   }
+
   /**
    * debug
    *
@@ -418,10 +405,14 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
+
   debug(msg, label = '', showIcon = false) {
+    if (utils.object('debug', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.debug + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.debug + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgKeyword('darkgray').black(label)}${label ? ' ' : ''}${colors.gray(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -429,6 +420,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerDebug
    *
@@ -439,6 +431,7 @@ class Messenger {
   loggerDebug(msg) {
     return this.writeToLog('debug', msg, true)
   }
+
   /**
    * log
    *
@@ -449,9 +442,12 @@ class Messenger {
    * @memberof Messenger
    */
   log(msg, label = '', showIcon = false) {
+    if (utils.object('log', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.log + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.log + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgWhite.black(label)}${label ? ' ' : ''}${icon + msg}`
     print(output)
     if (this !== undefined) {
@@ -459,6 +455,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerLog
    *
@@ -469,6 +466,7 @@ class Messenger {
   loggerLog(msg) {
     return this.writeToLog('log', msg, true)
   }
+
   /**
    * status
    *
@@ -479,9 +477,12 @@ class Messenger {
    * @memberof Messenger
    */
   status(msg, label = '', showIcon = false) {
+    if (utils.object('status', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.status + '  ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.status + '  ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgMagenta.black(label)}${label ? ' ' : ''}${colors.magenta(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -489,6 +490,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerStatus
    *
@@ -499,6 +501,7 @@ class Messenger {
   loggerStatus(msg) {
     return this.writeToLog('status', msg, true)
   }
+
   /**
    * notice
    *
@@ -509,9 +512,12 @@ class Messenger {
    * @memberof Messenger
    */
   notice(msg, label = '', showIcon = false) {
+    if (utils.object('notice', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.notice + ' ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.notice + ' ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgBlue.black(label)}${label ? ' ' : ''}${colors.blue(icon + msg)}`
     print(output)
     if (this !== undefined) {
@@ -519,6 +525,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerNotice
    *
@@ -529,8 +536,9 @@ class Messenger {
   loggerNotice(msg) {
     return this.writeToLog('notice', msg, true)
   }
+
   /**
-   * notice
+   * note
    *
    * @param {*} msg
    * @param {string} [label=""]
@@ -539,9 +547,12 @@ class Messenger {
    * @memberof Messenger
    */
   note(msg, label = '', showIcon = false) {
+    if (utils.object('note', msg, label)) {
+      return
+    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? this.icons.note + ' ' : ''
-    msg = formatMessage(msg)
+    let icon = showIcon ? utils.icons.note + ' ' : ''
+    msg = utils.formatMessage(msg)
     let output = `${colors.bgKeyword('orange').black(label)}${label ? ' ' : ''}${colors.keyword('orange')(
       icon + msg
     )}`
@@ -551,6 +562,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * loggerNote
    *
@@ -561,6 +573,7 @@ class Messenger {
   loggerNote(msg) {
     return this.writeToLog('note', msg, true)
   }
+
   /**
    * processing
    *
@@ -571,6 +584,7 @@ class Messenger {
   processing(msg) {
     console.log(colors.yellow(msg))
   }
+
   /**
    * timestamp
    *
@@ -588,6 +602,7 @@ class Messenger {
     let ms = showMicro && !useAMPM ? '.' + padZero(getMilliseconds(tsd), 3) : ''
     return format(tsd, tsFormat) + ms
   }
+
   /**
    * terminalInfo
    *
@@ -597,6 +612,7 @@ class Messenger {
   terminalInfo() {
     return windowSize
   }
+
   /**
    * dd (die dump)
    *
@@ -607,6 +623,7 @@ class Messenger {
   dd(...data) {
     dd(data)
   }
+
   /**
    * dump
    *
@@ -617,6 +634,7 @@ class Messenger {
   dump(...data) {
     dump(data)
   }
+
   /**
    * line
    *
@@ -632,6 +650,7 @@ class Messenger {
     print(output)
     return output
   }
+
   /**
    * center
    *
@@ -654,6 +673,7 @@ class Messenger {
       return output
     }
   }
+
   /**
    * icons
    *
@@ -661,8 +681,9 @@ class Messenger {
    * @memberof Messenger
    */
   getIcons() {
-    return this.icons
+    return utils.icons
   }
+
   validateConfig(config = {}) {
     let finalConfig = Object.assign(config)
     finalConfig.type = finalConfig.type === '' ? 'info' : finalConfig.type

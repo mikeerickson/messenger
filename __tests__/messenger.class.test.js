@@ -20,7 +20,7 @@ const commandTest = command => {
   })
 }
 
-describe(classLabel('Messenger Class'), () => {
+describe.only(classLabel('Messenger Class'), () => {
   let commands = [
     'critical',
     'error',
