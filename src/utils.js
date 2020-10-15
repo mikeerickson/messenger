@@ -1,3 +1,10 @@
+/*-------------------------------------------------------------------------------------------
+ * @codedungeon/messenger/utils
+ *
+ * Copyright (c) 2020 Mike Erickson / Codedungeon.  All rights reserved.
+ * Licensed under the MIT license.  See LICENSE in the project root for license information.
+ * -----------------------------------------------------------------------------------------*/
+
 const os = require('os')
 const colors = require('chalk')
 const { dd, dump } = require('dumper.js')

@@ -1,15 +1,21 @@
+/*-------------------------------------------------------------------------------------------
+ * @codedungeon/messenger
+ *
+ * Copyright (c) 2020 Mike Erickson / Codedungeon.  All rights reserved.
+ * Licensed under the MIT license.  See LICENSE in the project root for license information.
+ * -----------------------------------------------------------------------------------------*/
+
 const os = require('os')
 const colors = require('chalk')
-const Logger = require('./logger')
-const stripAnsi = require('strip-ansi')
-const { dd, dump } = require('dumper.js')
-const pkgInfo = require('../package.json')
-const { format, getMilliseconds } = require('date-fns')
-const clearCli = require('cli-clear')
-let windowSize = require('window-size')
 const utils = require('./utils')
+const Logger = require('./logger')
+const clearCli = require('cli-clear')
+const stripAnsi = require('strip-ansi')
+let windowSize = require('window-size')
+const { dd, dump } = require('dumper.js')
+const { format, getMilliseconds } = require('date-fns')
 
-/* istanbul ignore next */
+const pkgInfo = require('../package.json')
 
 /* istanbul ignore next */
 if (windowSize === undefined) {
@@ -64,6 +70,7 @@ class Messenger {
       'warning'
     ]
   }
+
   /**
    * version
    *
@@ -75,21 +82,51 @@ class Messenger {
     return utils.icons(type)
   }
 
-  messageColors(type) {
+  /**
+   * messageColors
+   *
+   * @param {string} [type='info']
+   * @return {*}
+   * @memberof Messenger
+   */
+  messageColors(type = 'info') {
     return utils.messageColors(type)
   }
 
+  /**
+   * version
+   *
+   * @return {*}
+   * @memberof Messenger
+   */
   version() {
     return pkgInfo.version
   }
+
+  /**
+   * alert
+   *
+   * @param {*} [config={}]
+   * @return {*}
+   * @memberof Messenger
+   */
   alert(config = {}) {
     let alertConfig = this.validateConfig(Object.assign({ type: 'info', msg: '', icon: false }, config))
     return this[alertConfig.type](alertConfig.msg, alertConfig.label, alertConfig.icon)
   }
+
+  /**
+   *
+   *
+   * @param {*} [config={}]
+   * @return {*}
+   * @memberof Messenger
+   */
   print(config = {}) {
     let alertConfig = this.validateConfig(Object.assign({ type: 'info', msg: '', icon: false }, config))
     return this[alertConfig.type](alertConfig.msg, alertConfig.label, alertConfig.icon)
   }
+
   /* istanbul ignore next */
   /**
    * initLogger
@@ -105,6 +142,7 @@ class Messenger {
     this.logger = new Logger({ path: logDir, appName })
     this.methods = this.logger.methods()
   }
+
   /* istanbul ignore next */
   /**
    * writeToLog
@@ -122,6 +160,11 @@ class Messenger {
     return ''
   }
 
+  /**
+   * clear
+   *
+   * @memberof Messenger
+   */
   clear() {
     clearCli()
   }
@@ -162,6 +205,7 @@ class Messenger {
   loggerCritical(msg) {
     return this.writeToLog('critical', msg, true)
   }
+
   /**
    * error
    *
@@ -185,6 +229,7 @@ class Messenger {
     }
     return output
   }
+
   /**
    * danger
    *
@@ -256,6 +301,7 @@ class Messenger {
   loggerSuccess(msg) {
     return this.writeToLog('success', msg, true)
   }
+
   /**
    * warning
    *
@@ -574,13 +620,14 @@ class Messenger {
     return this.writeToLog('note', msg, true)
   }
 
+  /* istanbul ignore next */
+
   /**
    * processing
    *
    * @param {*} msg
    * @memberof Messenger
    */
-  /* istanbul ignore next */
   processing(msg) {
     console.log(colors.yellow(msg))
   }
@@ -684,6 +731,13 @@ class Messenger {
     return utils.icons
   }
 
+  /**
+   * validateConfig
+   *
+   * @param {*} [config={}]
+   * @return {*}
+   * @memberof Messenger
+   */
   validateConfig(config = {}) {
     let finalConfig = Object.assign(config)
     finalConfig.type = finalConfig.type === '' ? 'info' : finalConfig.type

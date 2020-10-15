@@ -24,6 +24,7 @@ let showIcons = false
 let showLabels = false
 
 msg.critical('critical message', showLabels ? 'CRITICAL' : '', showIcons)
+msg.danger('critical message', showLabels ? 'DANGER' : '', showIcons)
 msg.error('error message', showLabels ? 'ERROR' : '', showIcons)
 msg.success('success message', showLabels ? 'SUCCESS' : '', showIcons)
 msg.warning('warning message', showLabels ? 'WARNING' : '', showIcons)
@@ -34,6 +35,13 @@ msg.note('note message', showLabels ? 'NOTE' : '', showIcons)
 msg.status('status message', showLabels ? 'STATUS' : '', showIcons)
 msg.info('info message', showLabels ? 'INFO' : '', showIcons)
 msg.debug('debug message', showLabels ? 'DEBUG' : '', showIcons)
+```
+
+If you want to pass a standard JavaScript `object` or `array` Messenger will use the `dump` method to display message, and if you supply `label` parameter, it will be displayed first and then message will be displayed (see the `./examples/test-messenger-obj.js` example method for further information)
+
+```js
+let obj = { fname: 'Mike', lname: 'Erickson', kids: ['Joelle', 'Brady', 'Bailey', 'Trevor'] }
+Messenger.success(obj, 'FAMILY')
 ```
 
 ## Using `alert` helper
