@@ -10,10 +10,6 @@ const colors = require('chalk')
 const { dd, dump } = require('dumper.js')
 
 module.exports = {
-  getIcon: function(type) {
-    return this.icons(type)
-  },
-
   icons: function(type) {
     let icons = {
       critical: '🚫',

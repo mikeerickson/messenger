@@ -72,12 +72,12 @@ class Messenger {
   }
 
   /**
-   * version
+   * icons
    *
-   * @returns
+   * @param {*} type
+   * @return {*}
    * @memberof Messenger
    */
-
   icons(type) {
     return utils.icons(type)
   }
@@ -106,7 +106,7 @@ class Messenger {
   /**
    * alert
    *
-   * @param {*} [config={}]
+   * @param {object} [config={}]
    * @return {*}
    * @memberof Messenger
    */
@@ -268,7 +268,7 @@ class Messenger {
   /**
    * success
    *
-   * @param {*} msg
+   * @param {object | string} msg
    * @param {string} [label=""]
    * @param {boolean} [showIcon=false]
    * @returns

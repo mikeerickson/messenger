@@ -1,1 +1,1 @@
-declare module '@codedungeon/messenger';
+declare module '@codedungeon/messenger'
