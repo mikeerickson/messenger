@@ -37,6 +37,12 @@ describe('Logger', () => {
       expect(result).to.equal(true)
       done()
     })
+
+    it('should validate system logging', done => {
+      // TODO: Add system logging
+
+      done()
+    })
   })
 
   context('it should create various log entries', () => {

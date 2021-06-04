@@ -1,0 +1,16 @@
+__tests__/
+docker/
+docs/
+examples/
+logs/
+sandbox/
+scripts/
+test/
+.dockerignore
+.eslintignore
+.prettierrc
+CHANGELOG.md
+*.taskpaper
+NOTES.md
+README.md
+tsconfig.json
