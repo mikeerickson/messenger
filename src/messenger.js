@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------------------------
  * @codedungeon/messenger
  *
- * Copyright (c) 2020 Mike Erickson / Codedungeon.  All rights reserved.
+ * Copyright (c) 2020-2021 Mike Erickson / Codedungeon.  All rights reserved.
  * Licensed under the MIT license.  See LICENSE in the project root for license information.
  * -----------------------------------------------------------------------------------------*/
 
@@ -13,7 +13,9 @@ const clearCli = require('cli-clear')
 const stripAnsi = require('strip-ansi')
 let windowSize = require('window-size')
 const { dd, dump } = require('dumper.js')
-const { format, getMilliseconds } = require('date-fns')
+const { format, getMilliseconds, isThisISOWeek } = require('date-fns')
+const homedir = require('node-homedir')
+const path = require('path')
 
 const pkgInfo = require('../package.json')
 
@@ -52,6 +54,7 @@ class Messenger {
    * @memberof Messenger
    */
   constructor() {
+    this.systemLog = false
     this.appName = '@codedungeon/messenger'
     this.logToFile = false
     this.methods = [
@@ -137,10 +140,33 @@ class Messenger {
    * @memberof Messenger
    */
   initLogger(logToFile = false, logDir = 'logs', appName = 'app') {
+    if (logDir === 'system') {
+      if (process.platform === 'win32') {
+        logDir = path.join(homedir(), 'Library', 'Logs')
+      }
+
+      if (process.platform === 'darwin') {
+        logDir = path.join(homedir(), 'Library', 'Logs')
+      }
+
+      this.systemLog = true
+    }
     this.logToFile = logToFile
     this.appName = appName
-    this.logger = new Logger({ path: logDir, appName })
+    this.logger = new Logger({ path: logDir, appName, system: this.systemLog })
     this.methods = this.logger.methods()
+  }
+
+  clearLog() {
+    this.logger.clear()
+  }
+
+  disableLog() {
+    this.logToFile = false
+  }
+
+  enableLog() {
+    this.logToFile = true
   }
 
   /* istanbul ignore next */

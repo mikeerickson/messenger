@@ -1,0 +1,17 @@
+const Messenger = require('../src/messenger')
+
+Messenger.initLogger(true, 'system', 'gunner')
+
+Messenger.log('test')
+Messenger.error('test')
+Messenger.success('test')
+Messenger.warn('test')
+// Messenger.clearLog()
+Messenger.disableLog()
+Messenger.warning('disabled')
+Messenger.critical('disabled')
+Messenger.info('disabled')
+Messenger.enableLog()
+Messenger.warning('enabled')
+Messenger.critical('enabled')
+Messenger.info('enabled')

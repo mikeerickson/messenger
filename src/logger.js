@@ -19,7 +19,7 @@ const fs = require('fs-extra')
 
 /* istanbul ignore next */
 function Logger(options) {
-  let defOptions = { path: 'logs', appName: 'app' }
+  let defOptions = { path: 'logs', appName: 'app', systemLog: false }
   options = Object.assign(defOptions, options)
 
   const addZero = value => (value <= 9 ? '0' + value : '' + value)
@@ -32,7 +32,8 @@ function Logger(options) {
   if (!fs.existsSync(folder)) {
     fs.mkdirpSync(folder)
   }
-  let filename = options.appName + '-' + dateStamp() + '.log'
+
+  let filename = options.system ? options.appName + '.log' : options.appName + '-' + dateStamp() + '.log'
 
   Object.defineProperties(this, {
     fs: {
@@ -121,6 +122,7 @@ Logger.prototype.format = (logLevel = 'log', logMsg = '') => {
   let level = logLevel.toUpperCase().padEnd(10)
   return `${ts} | ${level} | ${logMsg}`
 }
+
 /**
  * Writes the passed string to the log file
  * @param {string} data The data to be written in the log
@@ -132,6 +134,7 @@ Logger.prototype.write = function(data) {
   })
   return data
 }
+
 Logger.prototype.methods = function() {
   return [
     'critical',
@@ -239,6 +242,19 @@ Logger.prototype.debug = function(message) {
 /* istanbul ignore next */
 Logger.prototype.data = function(message) {
   return this.write(this.format('DATA', message) + this.EOL)
+}
+
+Logger.prototype.clear = function() {
+  if (process.platform === 'darwin') {
+    if (fs.existsSync(this?.file)) {
+      fs.unlinkSync(this.file)
+    }
+  }
+
+  if (process.platform === 'Win32') {
+    // check file existence
+    // clear log
+  }
 }
 
 module.exports = Logger
