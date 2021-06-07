@@ -14,18 +14,18 @@ module.exports = {
     let icons = {
       critical: '🚫',
       danger: '🚫',
+      debug: '◼',
       error: '✖',
-      success: '✔',
-      warn: '⚠️',
-      warning: '⚠️',
+      important: '★',
       info: '⌽',
       info_alt: '💡',
-      important: '★',
-      status: '◯',
-      notice: '◉',
-      note: '◉',
       log: '⇢',
-      debug: '◼'
+      note: '◉',
+      notice: '◉',
+      status: '◯',
+      success: '✔',
+      warn: '⚠️',
+      warning: '⚠️'
     }
     return icons[type]
   },

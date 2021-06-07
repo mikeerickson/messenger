@@ -177,10 +177,11 @@ class Messenger {
    * @param {*} args
    * @memberof Messenger
    */
-  writeToLog(type = '', args, forceLogToFile = false) {
+  writeToLog(type = '', label = '', msg = '', forceLogToFile = false) {
     if (this.logToFile || forceLogToFile) {
       if (this.methods.includes(type)) {
-        return this.logger[type](stripAnsi(args).replace(/\n/gi, ' - '))
+        let output = stripAnsi(msg).replace(/\n/gi, ' - ')
+        return this.logger[type](output)
       }
     }
     return ''
@@ -204,7 +205,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  critical(msg, label = '', showIcon = false) {
+  critical(msg = '', label = '', showIcon = false) {
     if (utils.object('critical', msg, label)) {
       return
     }
@@ -216,7 +217,7 @@ class Messenger {
     )(msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('critical', output)
+      this.writeToLog('critical', label, msg)
     }
     return output
   }
@@ -228,8 +229,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerCritical(msg) {
-    return this.writeToLog('critical', msg, true)
+  loggerCritical(msg = '') {
+    return this.writeToLog('critical', '', msg, true)
   }
 
   /**
@@ -241,7 +242,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  error(msg, label = '', showIcon = false) {
+  error(msg = '', label = '', showIcon = false) {
     if (utils.object('error', msg, label)) {
       return
     }
@@ -251,31 +252,7 @@ class Messenger {
     let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('error', output)
-    }
-    return output
-  }
-
-  /**
-   * danger
-   *
-   * @param {*} msg
-   * @param {string} [label=""]
-   * @param {boolean} [showIcon=false]
-   * @returns
-   * @memberof Messenger
-   */
-  danger(msg, label = '', showIcon = false) {
-    if (utils.object('danger', msg, label)) {
-      return
-    }
-    label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.danger + ' ' : ''
-    msg = utils.formatMessage(msg)
-    let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
-    print(output)
-    if (this !== undefined) {
-      this.writeToLog('error', output)
+      this.writeToLog('error', label, msg)
     }
     return output
   }
@@ -287,8 +264,43 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerError(msg) {
-    return this.writeToLog('error', msg, true)
+  loggerError(msg = '') {
+    return this.writeToLog('error', '', msg, true)
+  }
+
+  /**
+   * danger
+   *
+   * @param {*} msg
+   * @param {string} [label=""]
+   * @param {boolean} [showIcon=false]
+   * @returns
+   * @memberof Messenger
+   */
+  danger(msg = '', label = '', showIcon = false) {
+    if (utils.object('danger', msg, label)) {
+      return
+    }
+    label = label ? ' ' + label + ' ' : ''
+    let icon = showIcon ? utils.icons.danger + ' ' : ''
+    msg = utils.formatMessage(msg)
+    let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
+    print(output)
+    if (this !== undefined) {
+      this.writeToLog('danger', label, msg)
+    }
+    return output
+  }
+
+  /**
+   * loggerDanger
+   *
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerDanger(msg = '') {
+    return this.writeToLog('danger', '', msg, true)
   }
 
   /**
@@ -300,7 +312,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  success(msg, label = '', showIcon = false) {
+  success(msg = '', label = '', showIcon = false) {
     if (utils.object('success', msg, label)) {
       return
     }
@@ -312,7 +324,7 @@ class Messenger {
 
     print(output)
     if (this !== undefined) {
-      this.writeToLog('success', output)
+      this.writeToLog('success', label, msg)
     }
     return output
   }
@@ -324,8 +336,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerSuccess(msg) {
-    return this.writeToLog('success', msg, true)
+  loggerSuccess(msg = '') {
+    return this.writeToLog('success', '', msg, true)
   }
 
   /**
@@ -337,7 +349,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  warning(msg, label = '', showIcon = false) {
+  warning(msg = '', label = '', showIcon = false) {
     if (utils.object('warning', msg, label)) {
       return
     }
@@ -347,7 +359,7 @@ class Messenger {
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('warning', output)
+      this.writeToLog('warning', label, msg)
     }
     return output
   }
@@ -359,8 +371,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerWarning(msg) {
-    return this.writeToLog('warning', msg, true)
+  loggerWarning(msg = '') {
+    return this.writeToLog('warning', '', msg, true)
   }
 
   /**
@@ -372,7 +384,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  warn(msg, label = '', showIcon = false) {
+  warn(msg = '', label = '', showIcon = false) {
     if (utils.object('warn', msg, label)) {
       return
     }
@@ -382,7 +394,7 @@ class Messenger {
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('warn', output)
+      this.writeToLog('warn', label, msg)
     }
     return output
   }
@@ -394,8 +406,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerWarn(msg) {
-    return this.writeToLog('warn', msg, true)
+  loggerWarn(msg = '') {
+    return this.writeToLog('warn', '', msg, true)
   }
 
   /**
@@ -407,7 +419,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  important(msg, label = '', showIcon = false) {
+  important(msg = '', label = '', showIcon = false) {
     if (utils.object('important', msg, label)) {
       return
     }
@@ -417,7 +429,7 @@ class Messenger {
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('important', output)
+      this.writeToLog('important', label, msg)
     }
     return output
   }
@@ -429,8 +441,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerImportant(msg) {
-    return this.writeToLog('important', msg, true)
+  loggerImportant(msg = '') {
+    return this.writeToLog('important', '', msg, true)
   }
 
   /**
@@ -442,7 +454,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  info(msg, label = '', showIcon = false) {
+  info(msg = '', label = '', showIcon = false) {
     if (utils.object('info', msg, label)) {
       return
     }
@@ -452,7 +464,7 @@ class Messenger {
     let output = `${colors.bgCyan.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('info', output)
+      this.writeToLog('info', label, msg)
     }
     return output
   }
@@ -464,8 +476,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerInfo(msg) {
-    return this.writeToLog('info', msg, true)
+  loggerInfo(msg = '') {
+    return this.writeToLog('info', '', msg, true)
   }
 
   /**
@@ -478,7 +490,7 @@ class Messenger {
    * @memberof Messenger
    */
 
-  debug(msg, label = '', showIcon = false) {
+  debug(msg = '', label = '', showIcon = false) {
     if (utils.object('debug', msg, label)) {
       return
     }
@@ -488,7 +500,7 @@ class Messenger {
     let output = `${colors.bgKeyword('darkgray').black(label)}${label ? ' ' : ''}${colors.gray(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('debug', output)
+      this.writeToLog('debug', label, msg)
     }
     return output
   }
@@ -500,8 +512,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerDebug(msg) {
-    return this.writeToLog('debug', msg, true)
+  loggerDebug(msg = '') {
+    return this.writeToLog('debug', '', msg, true)
   }
 
   /**
@@ -513,7 +525,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  log(msg, label = '', showIcon = false) {
+  log(msg = '', label = '', showIcon = false) {
     if (utils.object('log', msg, label)) {
       return
     }
@@ -523,7 +535,7 @@ class Messenger {
     let output = `${colors.bgWhite.black(label)}${label ? ' ' : ''}${icon + msg}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('log', output)
+      this.writeToLog('log', label, msg)
     }
     return output
   }
@@ -535,8 +547,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerLog(msg) {
-    return this.writeToLog('log', msg, true)
+  loggerLog(msg = '') {
+    return this.writeToLog('log', '', msg, true)
   }
 
   /**
@@ -548,7 +560,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  status(msg, label = '', showIcon = false) {
+  status(msg = '', label = '', showIcon = false) {
     if (utils.object('status', msg, label)) {
       return
     }
@@ -558,7 +570,7 @@ class Messenger {
     let output = `${colors.bgMagenta.black(label)}${label ? ' ' : ''}${colors.magenta(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('status', output)
+      this.writeToLog('status', label, msg)
     }
     return output
   }
@@ -570,8 +582,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerStatus(msg) {
-    return this.writeToLog('status', msg, true)
+  loggerStatus(msg = '') {
+    return this.writeToLog('status', '', msg, true)
   }
 
   /**
@@ -583,7 +595,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  notice(msg, label = '', showIcon = false) {
+  notice(msg = '', label = '', showIcon = false) {
     if (utils.object('notice', msg, label)) {
       return
     }
@@ -593,7 +605,7 @@ class Messenger {
     let output = `${colors.bgBlue.black(label)}${label ? ' ' : ''}${colors.blue(icon + msg)}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('notice', output)
+      this.writeToLog('notice', label, msg)
     }
     return output
   }
@@ -605,8 +617,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerNotice(msg) {
-    return this.writeToLog('notice', msg, true)
+  loggerNotice(msg = '') {
+    return this.writeToLog('notice', '', msg, true)
   }
 
   /**
@@ -618,7 +630,7 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  note(msg, label = '', showIcon = false) {
+  note(msg = '', label = '', showIcon = false) {
     if (utils.object('note', msg, label)) {
       return
     }
@@ -630,7 +642,7 @@ class Messenger {
     )}`
     print(output)
     if (this !== undefined) {
-      this.writeToLog('note', output)
+      this.writeToLog('note', label, msg)
     }
     return output
   }
@@ -642,8 +654,8 @@ class Messenger {
    * @returns
    * @memberof Messenger
    */
-  loggerNote(msg) {
-    return this.writeToLog('note', msg, true)
+  loggerNote(msg = '') {
+    return this.writeToLog('note', '', msg, true)
   }
 
   /* istanbul ignore next */
@@ -654,7 +666,7 @@ class Messenger {
    * @param {*} msg
    * @memberof Messenger
    */
-  processing(msg) {
+  processing(msg = '') {
     console.log(colors.yellow(msg))
   }
 

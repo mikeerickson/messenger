@@ -138,6 +138,7 @@ Logger.prototype.write = function(data) {
 Logger.prototype.methods = function() {
   return [
     'critical',
+    'danger',
     'error',
     'warning',
     'warn',
@@ -157,6 +158,13 @@ Logger.prototype.methods = function() {
  */
 Logger.prototype.critical = function(message) {
   return this.write(this.format('CRITICAL', message) + this.EOL)
+}
+/**
+ * Prints a critical log message
+ * @param {string} message The message to be written
+ */
+Logger.prototype.danger = function(message) {
+  return this.write(this.format('DANGER', message) + this.EOL)
 }
 /**
  * Prints an error log message
