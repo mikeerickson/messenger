@@ -23,13 +23,13 @@ let methods = [
   'status',
   'success',
   'warn',
-  'warning'
+  'warning',
 ]
 
 // let colors = Messenger.messageColors('critical')
 // console.log(colors)
 
-methods.forEach(method => {
+methods.forEach((method) => {
   let colors = Messenger.messageColors(method)
   console.log(colors)
   let header = `\u001b[${colors.fg}` + method.toLocaleUpperCase() + '\u001b[39m'

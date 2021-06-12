@@ -22,7 +22,7 @@ function Logger(options) {
   let defOptions = { path: 'logs', appName: 'app', systemLog: false }
   options = Object.assign(defOptions, options)
 
-  const addZero = value => (value <= 9 ? '0' + value : '' + value)
+  const addZero = (value) => (value <= 9 ? '0' + value : '' + value)
 
   const dateStamp = (date = new Date()) => {
     return date.getFullYear() + '-' + addZero(date.getMonth() + 1) + '-' + addZero(date.getDate())
@@ -40,26 +40,26 @@ function Logger(options) {
       value: fs,
       enumerable: false,
       writable: false,
-      configurable: false
+      configurable: false,
     },
     EOL: {
       value: os.EOL,
       enumerable: false,
       writable: false,
-      configurable: false
+      configurable: false,
     },
     file: {
       value: path.join(folder, filename),
       enumerable: true,
       writable: false,
-      configurable: false
+      configurable: false,
     },
     date: {
-      get: function() {
+      get: function () {
         /* istanbul ignore next */
         return dateStamp(new Date())
-      }
-    }
+      },
+    },
   })
 }
 
@@ -128,14 +128,14 @@ Logger.prototype.format = (logLevel = 'log', logMsg = '') => {
  * @param {string} data The data to be written in the log
  */
 /* istanbul ignore next */
-Logger.prototype.write = function(data) {
-  this.fs.appendFileSync(this.file, data, function(err) {
+Logger.prototype.write = function (data) {
+  this.fs.appendFileSync(this.file, data, function (err) {
     if (err) throw err
   })
   return data
 }
 
-Logger.prototype.methods = function() {
+Logger.prototype.methods = function () {
   return [
     'critical',
     'danger',
@@ -149,98 +149,98 @@ Logger.prototype.methods = function() {
     'note',
     'debug',
     'log',
-    'status'
+    'status',
   ]
 }
 /**
  * Prints a critical log message
  * @param {string} message The message to be written
  */
-Logger.prototype.critical = function(message) {
+Logger.prototype.critical = function (message) {
   return this.write(this.format('CRITICAL', message) + this.EOL)
 }
 /**
  * Prints a critical log message
  * @param {string} message The message to be written
  */
-Logger.prototype.danger = function(message) {
+Logger.prototype.danger = function (message) {
   return this.write(this.format('DANGER', message) + this.EOL)
 }
 /**
  * Prints an error log message
  * @param {string} message The message to be written
  */
-Logger.prototype.error = function(message) {
+Logger.prototype.error = function (message) {
   return this.write(this.format('ERROR', message) + this.EOL)
 }
 /**
  * Prints a notice log message
  * @param {string} message The message to be written
  */
-Logger.prototype.notice = function(message) {
+Logger.prototype.notice = function (message) {
   return this.write(this.format('NOTICE', message) + this.EOL)
 }
 /**
  * Prints a note log message
  * @param {string} message The message to be written
  */
-Logger.prototype.note = function(message) {
+Logger.prototype.note = function (message) {
   return this.write(this.format('NOTE', message) + this.EOL)
 }
 /**
  * Prints a status log message
  * @param {string} message The message to be written
  */
-Logger.prototype.status = function(message) {
+Logger.prototype.status = function (message) {
   return this.write(this.format('STATUS', message) + this.EOL)
 }
 /**
  * Prints a success log message
  * @param {string} message The message to be written
  */
-Logger.prototype.success = function(message) {
+Logger.prototype.success = function (message) {
   return this.write(this.format('SUCCESS', message) + this.EOL)
 }
 /**
  * Prints a standard log message
  * @param {string} message The message to be written
  */
-Logger.prototype.log = function(message) {
+Logger.prototype.log = function (message) {
   return this.write(this.format('LOG', message) + this.EOL)
 }
 /**
  * Prints an info log message
  * @param {string} message The message to be written
  */
-Logger.prototype.info = function(message) {
+Logger.prototype.info = function (message) {
   return this.write(this.format('INFO', message) + this.EOL)
 }
 /**
  * Prints an important log message
  * @param {string} message The message to be written
  */
-Logger.prototype.important = function(message) {
+Logger.prototype.important = function (message) {
   return this.write(this.format('IMPORTANT', message) + this.EOL)
 }
 /**
  * Prints a warning log message
  * @param {string} message The message to be printed
  */
-Logger.prototype.warning = function(message) {
+Logger.prototype.warning = function (message) {
   return this.write(this.format('WARNING', message) + this.EOL)
 }
 /**
  * Prints a warning log message
  * @param {string} message The message to be printed
  */
-Logger.prototype.warn = function(message) {
+Logger.prototype.warn = function (message) {
   return this.write(this.format('WARN', message) + this.EOL)
 }
 /**
  * Prints a warning log message
  * @param {string} message The message to be printed
  */
-Logger.prototype.debug = function(message) {
+Logger.prototype.debug = function (message) {
   return this.write(this.format('DEBUG', message) + this.EOL)
 }
 /**
@@ -248,11 +248,11 @@ Logger.prototype.debug = function(message) {
  * @param {string} message The message to be printed
  */
 /* istanbul ignore next */
-Logger.prototype.data = function(message) {
+Logger.prototype.data = function (message) {
   return this.write(this.format('DATA', message) + this.EOL)
 }
 
-Logger.prototype.clear = function() {
+Logger.prototype.clear = function () {
   if (process.platform === 'darwin') {
     if (fs.existsSync(this?.file)) {
       fs.unlinkSync(this.file)

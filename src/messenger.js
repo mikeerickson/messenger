@@ -32,7 +32,7 @@ if (windowSize === undefined) {
  * @param {*} args
  * @memberof Messenger
  */
-const print = args => {
+const print = (args) => {
   // console.log(args);
   // this has been disabled, using jest function mock instead
   /* istanbul ignore next */
@@ -71,7 +71,7 @@ class Messenger {
       'status',
       'success',
       'warn',
-      'warning'
+      'warning',
     ]
   }
 
@@ -182,7 +182,9 @@ class Messenger {
     if (this.logToFile || forceLogToFile) {
       if (this.methods.includes(type)) {
         let output = stripAnsi(msg).replace(/\n/gi, ' - ')
-        return this.logger[type](output)
+        if (this.logger) {
+          return this.logger[type](output)
+        }
       }
     }
     return ''

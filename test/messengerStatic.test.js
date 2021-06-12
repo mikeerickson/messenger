@@ -17,7 +17,7 @@ const {
   debug,
   log,
   center,
-  line
+  line,
 } = require('../src/messenger')
 
 describe('Messenger Static', () => {
@@ -29,7 +29,7 @@ describe('Messenger Static', () => {
     process.env.NODE_ENV = 'test'
   })
   describe('Miscellaneous', () => {
-    it('version returns `pkgInfo.version` property', done => {
+    it('version returns `pkgInfo.version` property', (done) => {
       expect(print.version()).to.equal(pkgInfo.version)
       done()
     })

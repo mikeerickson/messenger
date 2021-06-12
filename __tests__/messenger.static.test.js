@@ -15,7 +15,7 @@ const {
   debug,
   log,
   center,
-  line
+  line,
 } = require('../src/messenger')
 
 describe(classLabel('Messenger Class'), () => {
@@ -24,11 +24,11 @@ describe(classLabel('Messenger Class'), () => {
     message = 'Messenger Test'
   })
   describe(commandLabel('Miscellaneous'), () => {
-    test('version returns `pkgInfo.version` property', done => {
+    test('version returns `pkgInfo.version` property', (done) => {
       expect(print.version()).toEqual(pkgInfo.version)
       done()
     })
-    test('console.log has been called', done => {
+    test('console.log has been called', (done) => {
       // https://stackoverflow.com/questions/44467657/jest-better-way-to-disable-console-inside-unit-tests
       console.log = jest.fn()
       console.log('hello world')

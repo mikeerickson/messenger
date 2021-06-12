@@ -10,7 +10,7 @@ const colors = require('chalk')
 const { dd, dump } = require('dumper.js')
 
 module.exports = {
-  icons: function(type) {
+  icons: function (type) {
     let icons = {
       critical: '🚫',
       danger: '🚫',
@@ -25,7 +25,7 @@ module.exports = {
       status: '◯',
       success: '✔',
       warn: '⚠️',
-      warning: '⚠️'
+      warning: '⚠️',
     }
     return icons[type]
   },
@@ -34,7 +34,7 @@ module.exports = {
     return ('000000000' + num).substr(-size)
   },
 
-  formatMessage: msg => {
+  formatMessage: (msg) => {
     let result = msg
     if (Array.isArray(msg)) {
       return msg.join(' ')
@@ -51,7 +51,7 @@ module.exports = {
     return result
   },
 
-  messageColors: type => {
+  messageColors: (type) => {
     let colors = {
       critical: { fg: '38m', bg: '48m' },
       danger: { fg: '31m', bg: '41m' },
@@ -65,7 +65,7 @@ module.exports = {
       status: { fg: '35m', bg: '45m' },
       success: { fg: '32m', bg: '42m' },
       warn: { fg: '33m', bg: '43m' },
-      warning: { fg: '33m', bg: '43m' }
+      warning: { fg: '33m', bg: '43m' },
     }
     // if (os.platform() === 'linux') {
     //   messageColors.critical.fg = '001b[91m'
@@ -78,7 +78,7 @@ module.exports = {
     return colors[type]
   },
 
-  label: function(type = 'info', label = '') {
+  label: function (type = 'info', label = '') {
     /* eslint-disable */
     let output = ''
     if (label.length === 0) {
@@ -133,7 +133,7 @@ module.exports = {
     /* eslint-enable */
   },
 
-  object: function(type, obj = null, label = null) {
+  object: function (type, obj = null, label = null) {
     if (typeof obj === 'object') {
       if (label) {
         this.label(type, label)
@@ -142,5 +142,5 @@ module.exports = {
       return true
     }
     return false
-  }
+  },
 }

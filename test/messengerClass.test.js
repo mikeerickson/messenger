@@ -20,16 +20,16 @@ let commands = [
   'log',
   'debug',
   'status',
-  'success'
+  'success',
 ]
 
-const commandTest = command => {
+const commandTest = (command) => {
   let message = `${command} class message`
   let tests = [
     [message, '', false, message],
     [message, command, false, command],
     [message, command.toUpperCase(), false, command.toUpperCase()],
-    [message, 'TEST_LABEL_FG', false, messageColor(command).fg]
+    [message, 'TEST_LABEL_FG', false, messageColor(command).fg],
   ]
 
   forEach(tests).it(`.${command}(%s, %s, %s)`, (msg, label, icon, expected) => {
@@ -51,7 +51,7 @@ const commandTest = command => {
 }
 
 describe('Messenger Class', () => {
-  commands.forEach(command => {
+  commands.forEach((command) => {
     describe(`.${command}`, () => {
       commandTest(command)
     })

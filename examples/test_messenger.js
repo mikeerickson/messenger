@@ -18,12 +18,12 @@ let commands = [
   'notice',
   'log',
   'debug',
-  'status'
+  'status',
 ]
 
 let testObj = { fname: 'Mike', lname: 'Erickson' }
 
-commands.forEach(command => {
+commands.forEach((command) => {
   Messenger[command](`test ${command}`)
   Messenger[command](testObj)
   Messenger[command]([command, 'mike', 'joseph', 'erickson'])

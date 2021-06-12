@@ -21,11 +21,11 @@ let commands = [
   'loggerNotice',
   'loggerLog',
   'loggerDebug',
-  'loggerStatus'
+  'loggerStatus',
 ]
 
 describe('Messenger Class: Logger', () => {
-  it('should write log only', done => {
+  it('should write log only', (done) => {
     let msg = 'write message'
     let result = m.loggerWrite('log', msg)
 
@@ -34,7 +34,7 @@ describe('Messenger Class: Logger', () => {
     done()
   })
 
-  it('should log critical', done => {
+  it('should log critical', (done) => {
     let msg = 'critical logger message'
     let result = m.loggerCritical(msg)
 
@@ -42,77 +42,77 @@ describe('Messenger Class: Logger', () => {
     expect(commands.includes('loggerCritical')).to.be.true
     done()
   })
-  it('should log error', done => {
+  it('should log error', (done) => {
     let msg = 'error logger message'
     let result = m.loggerError(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerError')).to.be.true
     done()
   })
-  it('should log success', done => {
+  it('should log success', (done) => {
     let msg = 'success logger message'
     let result = m.loggerSuccess(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerSuccess')).to.be.true
     done()
   })
-  it('should log warning', done => {
+  it('should log warning', (done) => {
     let msg = 'warning logger message'
     let result = m.loggerWarning(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerWarning')).to.be.true
     done()
   })
-  it('should log warn', done => {
+  it('should log warn', (done) => {
     let msg = 'warn logger message'
     let result = m.loggerWarn(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerWarn')).to.be.true
     done()
   })
-  it('should log important', done => {
+  it('should log important', (done) => {
     let msg = 'important logger message'
     let result = m.loggerImportant(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerImportant')).to.be.true
     done()
   })
-  it('should log info', done => {
+  it('should log info', (done) => {
     let msg = 'info logger message'
     let result = m.loggerInfo(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerInfo')).to.be.true
     done()
   })
-  it('should log note', done => {
+  it('should log note', (done) => {
     let msg = 'note logger message'
     let result = m.loggerNote(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerNote')).to.be.true
     done()
   })
-  it('should log notice', done => {
+  it('should log notice', (done) => {
     let msg = 'notice logger message'
     let result = m.loggerNotice(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerNotice')).to.be.true
     done()
   })
-  it('should log log', done => {
+  it('should log log', (done) => {
     let msg = 'notice log message'
     let result = m.loggerLog(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerLog')).to.be.true
     done()
   })
-  it('should log debug', done => {
+  it('should log debug', (done) => {
     let msg = 'debug log message'
     let result = m.loggerDebug(msg)
     expect(result).to.contain(msg)
     expect(commands.includes('loggerDebug')).to.be.true
     done()
   })
-  it('should log status', done => {
+  it('should log status', (done) => {
     let msg = 'status log message'
     let result = m.loggerStatus(msg)
     expect(result).to.contain(msg)

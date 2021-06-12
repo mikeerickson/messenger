@@ -16,7 +16,7 @@ module.exports = {
     MAIN_LINE,
     MAIN_ICON,
     DESCRIBE_ICON,
-    TEST_ICON
+    TEST_ICON,
   },
   classLabel: (str, icon = MAIN_ICON) => {
     let main = ' ' + str + '  ' + MAIN_LINE.repeat(terminal.width - str.length)
@@ -29,10 +29,10 @@ module.exports = {
   testLabel: (str, icon = TEST_ICON) => {
     return colors.cyan.bold(`\n ${icon}   ${str}\n`)
   },
-  raw: str => {
+  raw: (str) => {
     return JSON.stringify(str)
   },
   colors,
   terminal,
-  stripAnsi
+  stripAnsi,
 }
