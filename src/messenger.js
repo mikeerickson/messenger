@@ -58,6 +58,7 @@ class Messenger {
     this.appName = '@codedungeon/messenger'
     this.logToFile = false
     this.methods = [
+      'write',
       'critical',
       'danger',
       'debug',
@@ -197,6 +198,42 @@ class Messenger {
   }
 
   /**
+   * loggerWrite
+   *
+   * @param {*} type (default: log)
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  loggerWrite(type = 'log', msg = '') {
+    this.writeToLog(type, '', msg, true)
+    return msg
+  }
+
+  /**
+   * write
+   *
+   * @param {string} [type="log"]
+   * @param {*} msg
+   * @returns
+   * @memberof Messenger
+   */
+  write(type = '', msg = '') {
+    let label = ''
+    let showIcon = false
+    let icon = showIcon ? utils.icons('critical') + '  ' : ''
+    msg = utils.formatMessage(msg)
+    let output = `${colors.bgKeyword('orangered').black(label)}${label ? ' ' : ''}${icon}${colors.keyword(
+      'orangered'
+    )(msg)}`
+
+    if (this !== undefined) {
+      this.writeToLog(type, label, msg)
+    }
+    return output
+  }
+
+  /**
    * critical
    *
    * @param {*} msg
@@ -206,15 +243,13 @@ class Messenger {
    * @memberof Messenger
    */
   critical(msg = '', label = '', showIcon = false) {
-    if (utils.object('critical', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.critical + '  ' : ''
+    let icon = showIcon ? utils.icons('critical') + '  ' : ''
     msg = utils.formatMessage(msg)
     let output = `${colors.bgKeyword('orangered').black(label)}${label ? ' ' : ''}${icon}${colors.keyword(
       'orangered'
     )(msg)}`
+
     print(output)
     if (this !== undefined) {
       this.writeToLog('critical', label, msg)
@@ -243,11 +278,8 @@ class Messenger {
    * @memberof Messenger
    */
   error(msg = '', label = '', showIcon = false) {
-    if (utils.object('error', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.error + ' ' : ''
+    let icon = showIcon ? utils.icons('error') + ' ' : ''
     msg = utils.formatMessage(msg)
     let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
     print(output)
@@ -278,11 +310,8 @@ class Messenger {
    * @memberof Messenger
    */
   danger(msg = '', label = '', showIcon = false) {
-    if (utils.object('danger', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.danger + ' ' : ''
+    let icon = showIcon ? utils.icons('danger') + ' ' : ''
     msg = utils.formatMessage(msg)
     let output = `${colors.bgRed.black(label)}${label ? ' ' : ''}${colors.red(icon + msg)}`
     print(output)
@@ -313,15 +342,12 @@ class Messenger {
    * @memberof Messenger
    */
   success(msg = '', label = '', showIcon = false) {
-    if (utils.object('success', msg, label)) {
-      return
-    }
-
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.success + ' ' : ''
+
+    let icon = showIcon ? utils.icons('success') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgGreen.black(label)}${label ? ' ' : ''}${colors.green(icon + msg)}`
-
     print(output)
     if (this !== undefined) {
       this.writeToLog('success', label, msg)
@@ -350,11 +376,9 @@ class Messenger {
    * @memberof Messenger
    */
   warning(msg = '', label = '', showIcon = false) {
-    if (utils.object('warning', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.warning + '  ' : ''
+    let icon = showIcon ? utils.icons('warning') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
@@ -385,11 +409,9 @@ class Messenger {
    * @memberof Messenger
    */
   warn(msg = '', label = '', showIcon = false) {
-    if (utils.object('warn', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.warn + '  ' : ''
+    let icon = showIcon ? utils.icons('warn') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
@@ -420,11 +442,9 @@ class Messenger {
    * @memberof Messenger
    */
   important(msg = '', label = '', showIcon = false) {
-    if (utils.object('important', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.important + '  ' : ''
+    let icon = showIcon ? utils.icons('important') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgYellow.black(label)}${label ? ' ' : ''}${colors.yellow(icon + msg)}`
     print(output)
@@ -455,17 +475,18 @@ class Messenger {
    * @memberof Messenger
    */
   info(msg = '', label = '', showIcon = false) {
-    if (utils.object('info', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.info + '  ' : ''
+    let icon = showIcon ? utils.icons('info') + ' ' : ''
+
     msg = utils.formatMessage(msg)
+
     let output = `${colors.bgCyan.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
+
     print(output)
     if (this !== undefined) {
       this.writeToLog('info', label, msg)
     }
+
     return output
   }
 
@@ -491,11 +512,9 @@ class Messenger {
    */
 
   debug(msg = '', label = '', showIcon = false) {
-    if (utils.object('debug', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.debug + '  ' : ''
+    let icon = showIcon ? utils.icons('debug') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgKeyword('darkgray').black(label)}${label ? ' ' : ''}${colors.gray(icon + msg)}`
     print(output)
@@ -526,11 +545,9 @@ class Messenger {
    * @memberof Messenger
    */
   log(msg = '', label = '', showIcon = false) {
-    if (utils.object('log', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.log + '  ' : ''
+    let icon = showIcon ? utils.icons('log') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgWhite.black(label)}${label ? ' ' : ''}${icon + msg}`
     print(output)
@@ -561,11 +578,9 @@ class Messenger {
    * @memberof Messenger
    */
   status(msg = '', label = '', showIcon = false) {
-    if (utils.object('status', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.status + '  ' : ''
+    let icon = showIcon ? utils.icons('status') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgMagenta.black(label)}${label ? ' ' : ''}${colors.magenta(icon + msg)}`
     print(output)
@@ -596,11 +611,9 @@ class Messenger {
    * @memberof Messenger
    */
   notice(msg = '', label = '', showIcon = false) {
-    if (utils.object('notice', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.notice + ' ' : ''
+    let icon = showIcon ? utils.icons('notice') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgBlue.black(label)}${label ? ' ' : ''}${colors.blue(icon + msg)}`
     print(output)
@@ -631,11 +644,9 @@ class Messenger {
    * @memberof Messenger
    */
   note(msg = '', label = '', showIcon = false) {
-    if (utils.object('note', msg, label)) {
-      return
-    }
     label = label ? ' ' + label + ' ' : ''
-    let icon = showIcon ? utils.icons.note + ' ' : ''
+    let icon = showIcon ? utils.icons('note') + ' ' : ''
+
     msg = utils.formatMessage(msg)
     let output = `${colors.bgKeyword('orange').black(label)}${label ? ' ' : ''}${colors.keyword('orange')(
       icon + msg
@@ -788,6 +799,7 @@ class Messenger {
 }
 
 // export all methods so they call be used statically
+exports.write = new Messenger().critical
 exports.critical = new Messenger().critical
 exports.danger = new Messenger().danger
 exports.error = new Messenger().error

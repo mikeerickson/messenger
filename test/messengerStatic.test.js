@@ -3,6 +3,7 @@ const print = require('../src/messenger')
 const pkgInfo = require('../package.json')
 
 const {
+  write,
   critical,
   error,
   success,
@@ -37,6 +38,12 @@ describe('Messenger Static', () => {
     it('critical static', () => {
       expect(typeof critical).to.be.equal('function')
       critical(message)
+    })
+  })
+  describe('Write Static', () => {
+    it('write static', () => {
+      expect(typeof write).to.be.equal('function')
+      write(message)
     })
   })
   describe('Error Static', () => {

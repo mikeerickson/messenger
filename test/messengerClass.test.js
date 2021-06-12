@@ -29,13 +29,12 @@ const commandTest = command => {
     [message, '', false, message],
     [message, command, false, command],
     [message, command.toUpperCase(), false, command.toUpperCase()],
-    [message, 'TEST_LABEL_FG', false, messageColor(command).fg],
-    [message, 'TEST_LABEL_BG', false, messageColor(command).bg],
-    [message, '', true, icons[command]]
+    [message, 'TEST_LABEL_FG', false, messageColor(command).fg]
   ]
 
   forEach(tests).it(`.${command}(%s, %s, %s)`, (msg, label, icon, expected) => {
     // executer command
+
     let result = Messenger[command](msg, label, icon)
 
     // are we testing against escaped color
@@ -51,7 +50,7 @@ const commandTest = command => {
   })
 }
 
-describe.only('Messenger Class', () => {
+describe('Messenger Class', () => {
   commands.forEach(command => {
     describe(`.${command}`, () => {
       commandTest(command)
@@ -60,24 +59,35 @@ describe.only('Messenger Class', () => {
 })
 
 describe('Messenger Class Utilities', () => {
-  it('should confirm icons exists for each method', () => {
-    let icons = Messenger.getIcons()
-    commands.forEach(command => {
-      expect(icons.hasOwnProperty(command)).to.equal(true)
-    })
+  // it('should confirm icons exists for each method', () => {
+  //   let icons = Messenger.getIcons()
+  //   commands.forEach(command => {
+  //     expect(icons.hasOwnProperty(command)).to.equal(true)
+  //   })
+  // })
+
+  it('should write to log', () => {
+    let message = Messenger.write('log', 'hello world')
+    expect(message).to.contain('hello world')
   })
+
   it('return information about terminal', () => {
     let terminal = Messenger.terminalInfo()
     expect(terminal.hasOwnProperty('width')).to.equal(true)
   })
+
   it('properly formats message object', () => {
     let message = Messenger.info({ fname: 'Mike' })
+
     expect(message).to.contain('Mike')
   })
+
   it('properly formats message array', () => {
     let message = Messenger.info(['mike', 'erickson'])
+
     expect(message).to.contain('mike erickson')
   })
+
   it('should call `alert` helper', () => {
     let message = Messenger.alert({ type: 'info', msg: 'mike erickson' })
     expect(message).to.contain('mike erickson')
@@ -90,7 +100,7 @@ describe('Messenger Class Utilities', () => {
 
   it('should call `alert` helper with icon', () => {
     let message = Messenger.alert({ type: 'info', label: 'INFO', msg: 'mike erickson', icon: true })
-    expect(message).to.contain(icons.info)
+    expect(message).to.contain(icons('info'))
   })
 
   it('should call `print` helper', () => {
@@ -105,6 +115,6 @@ describe('Messenger Class Utilities', () => {
 
   it('should call `print` helper with icon', () => {
     let message = Messenger.print({ type: 'info', label: 'INFO', msg: 'mike erickson', icon: true })
-    expect(message).to.contain(icons.info)
+    expect(message).to.contain(icons('info'))
   })
 })

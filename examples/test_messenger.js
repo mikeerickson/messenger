@@ -1,6 +1,5 @@
 const colors = require('chalk')
 const Messenger = require('../src/messenger')
-
 Messenger.initLogger(true, 'logs', 'messenger')
 
 let showIcon = true
@@ -34,11 +33,14 @@ commands.forEach(command => {
     showLabel ? command.toUpperCase() : '',
     showIcon
   )
+
   console.log('')
 })
 
+Messenger.write('log', 'write static')
+
+Messenger.dd('stop')
 Messenger.info('Lines displayed width of terminal window')
-Messenger.line('=')
 Messenger.line('.')
 Messenger.line('_')
 console.log('')
@@ -52,7 +54,6 @@ Messenger.center(colors.magenta('alternate message'))
 console.log('')
 
 Messenger.dump('this', 'is', 'a', 'test')
-// Messenger.dd('this', 'is', 'from', 'die dump (dd)')
 
 let msg = 'Hello World'
 
@@ -64,6 +65,7 @@ Messenger.alert({ type: 'critical', msg, label: '', icon: false })
 Messenger.alert({ type: 'critical', msg, label: 'CRITICAL', icon: false })
 Messenger.alert({ type: 'critical', msg, label: 'CRITICAL', icon: true })
 console.log('')
+process.exit()
 
 Messenger.alert({ type: 'error', msg, label: '', icon: false })
 Messenger.alert({ type: 'error', msg, label: 'ERROR', icon: false })

@@ -9,6 +9,7 @@ const expect = require('chai').expect
 m.initLogger(false, 'logs', 'test-logger')
 
 let commands = [
+  'loggerWrite',
   'loggerCritical',
   'loggerError',
   'loggerSuccess',
@@ -24,6 +25,15 @@ let commands = [
 ]
 
 describe('Messenger Class: Logger', () => {
+  it('should write log only', done => {
+    let msg = 'write message'
+    let result = m.loggerWrite('log', msg)
+
+    expect(result).to.contain(msg)
+    expect(commands.includes('loggerWrite')).to.be.true
+    done()
+  })
+
   it('should log critical', done => {
     let msg = 'critical logger message'
     let result = m.loggerCritical(msg)

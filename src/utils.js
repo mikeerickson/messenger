@@ -36,6 +36,9 @@ module.exports = {
 
   formatMessage: msg => {
     let result = msg
+    if (Array.isArray(msg)) {
+      return msg.join(' ')
+    }
     if (typeof msg === 'object') {
       if (Array.isArray(msg)) {
         result = msg.toString().replace(/,/gi, ' ')
@@ -44,6 +47,7 @@ module.exports = {
         result = result.replace(/,/gi, ', ').replace(/:/gi, ': ')
       }
     }
+
     return result
   },
 
