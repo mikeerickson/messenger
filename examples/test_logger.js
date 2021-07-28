@@ -1,5 +1,5 @@
 const messenger = require('../src/messenger')
-messenger.initLogger(false, 'logs', 'messenger')
+messenger.initLogger(true, 'logs', 'messenger')
 
 messenger.loggerWrite('log', 'hello world')
 messenger.loggerCritical('logger critical message')
