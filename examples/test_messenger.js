@@ -2,6 +2,12 @@ const colors = require('chalk')
 const Messenger = require('../src/messenger')
 Messenger.initLogger(true, 'logs', 'messenger')
 
+const titleCase = str => {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
+}
+
 let showIcon = true
 let showLabel = true
 console.log('')
@@ -18,12 +24,12 @@ let commands = [
   'notice',
   'log',
   'debug',
-  'status',
+  'status'
 ]
 
 let testObj = { fname: 'Mike', lname: 'Erickson' }
 
-commands.forEach((command) => {
+commands.forEach(command => {
   Messenger[command](`test ${command}`)
   Messenger[command](testObj)
   Messenger[command]([command, 'mike', 'joseph', 'erickson'])
@@ -33,6 +39,10 @@ commands.forEach((command) => {
     showLabel ? command.toUpperCase() : '',
     showIcon
   )
+
+  let lbl = 'lbl' + titleCase(command)
+  let test = Messenger[lbl](`${command} label`.toLocaleUpperCase())
+  console.log(test + ' <== Formatted Label Only')
 
   console.log('')
 })

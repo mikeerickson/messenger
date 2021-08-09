@@ -32,7 +32,7 @@ if (windowSize === undefined) {
  * @param {*} args
  * @memberof Messenger
  */
-const print = (args) => {
+const print = args => {
   // console.log(args);
   // this has been disabled, using jest function mock instead
   /* istanbul ignore next */
@@ -60,18 +60,27 @@ class Messenger {
     this.methods = [
       'write',
       'critical',
+      'lblCritical',
       'danger',
+      'lblDanger',
       'debug',
       'error',
+      'lblError',
       'important',
+      'lblImportant',
       'info',
+      'lblInfo',
       'log',
       'note',
       'notice',
+      'lblNotice',
       'status',
       'success',
+      'lblSuccess',
       'warn',
+      'lblWarn',
       'warning',
+      'lblWarning'
     ]
   }
 
@@ -259,6 +268,10 @@ class Messenger {
     return output
   }
 
+  lblCritical(label = '') {
+    return colors.bgKeyword('orangered').black(` ${label} `)
+  }
+
   /**
    * loggerCritical
    *
@@ -291,6 +304,10 @@ class Messenger {
     return output
   }
 
+  lblError(label = '') {
+    return colors.bgRed.black(` ${label} `)
+  }
+
   /**
    * loggerError
    *
@@ -321,6 +338,10 @@ class Messenger {
       this.writeToLog('danger', label, msg)
     }
     return output
+  }
+
+  lblDanger(label = '') {
+    return colors.bgRed.black(` ${label} `)
   }
 
   /**
@@ -357,6 +378,10 @@ class Messenger {
     return output
   }
 
+  lblSuccess(label = '') {
+    return colors.bgGreen.black(` ${label} `)
+  }
+
   /**
    * loggerSuccess
    *
@@ -388,6 +413,10 @@ class Messenger {
       this.writeToLog('warning', label, msg)
     }
     return output
+  }
+
+  lblWarning(label = '') {
+    return colors.bgYellow.black(` ${label} `)
   }
 
   /**
@@ -423,6 +452,10 @@ class Messenger {
     return output
   }
 
+  lblWarn(label = '') {
+    return colors.bgYellow.black(` ${label} `)
+  }
+
   /**
    * loggerWarn
    *
@@ -456,6 +489,10 @@ class Messenger {
     return output
   }
 
+  lblImportant(label = '') {
+    return colors.bgYellow.black(` ${label} `)
+  }
+
   /**
    * loggerImportant
    *
@@ -482,7 +519,7 @@ class Messenger {
 
     msg = utils.formatMessage(msg)
 
-    let output = `${colors.bgCyan.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
+    let output = `${colors.bgBlue.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
 
     print(output)
     if (this !== undefined) {
@@ -490,6 +527,10 @@ class Messenger {
     }
 
     return output
+  }
+
+  lblInfo(label = '') {
+    return colors.bgBlue.black(` ${label} `)
   }
 
   /**
@@ -526,6 +567,10 @@ class Messenger {
     return output
   }
 
+  lblDebug(label = '') {
+    return colors.bgKeyword('darkgray').black(` ${label} `)
+  }
+
   /**
    * loggerDebug
    *
@@ -557,6 +602,10 @@ class Messenger {
       this.writeToLog('log', label, msg)
     }
     return output
+  }
+
+  lblLog(label = '') {
+    return colors.bgWhite.black(` ${label} `)
   }
 
   /**
@@ -592,6 +641,10 @@ class Messenger {
     return output
   }
 
+  lblStatus(label = '') {
+    return colors.bgMagenta.black(` ${label} `)
+  }
+
   /**
    * loggerStatus
    *
@@ -623,6 +676,10 @@ class Messenger {
       this.writeToLog('notice', label, msg)
     }
     return output
+  }
+
+  lblNotice(label = '') {
+    return colors.bgBlue.black(` ${label} `)
   }
 
   /**
@@ -658,6 +715,10 @@ class Messenger {
       this.writeToLog('note', label, msg)
     }
     return output
+  }
+
+  lblNote(label = '') {
+    return colors.bgKeyword('orange').black(` ${label} `)
   }
 
   /**
@@ -802,18 +863,43 @@ class Messenger {
 
 // export all methods so they call be used statically
 exports.write = new Messenger().critical
+
 exports.critical = new Messenger().critical
+exports.lblCritical = new Messenger().lblCritical
+
 exports.danger = new Messenger().danger
+exports.lblDanger = new Messenger().lblDanger
+
 exports.error = new Messenger().error
+exports.lblError = new Messenger().lblError
+
 exports.success = new Messenger().success
+exports.lblSuccess = new Messenger().lblSuccess
+
 exports.warning = new Messenger().warning
+exports.lblWarning = new Messenger().lblWarning
+
 exports.warn = new Messenger().warn
+exports.lblWarn = new Messenger().lblWarning
+
 exports.important = new Messenger().important
+exports.important = new Messenger().lblImportant
+
 exports.info = new Messenger().info
+exports.lblInfo = new Messenger().lblInfo
+
 exports.notice = new Messenger().notice
+exports.lblNotice = new Messenger().lblNotice
+
 exports.status = new Messenger().status
+exports.status = new Messenger().lblStatus
+
 exports.debug = new Messenger().debug
+exports.lblDebug = new Messenger().lblDebug
+
 exports.log = new Messenger().log
+exports.lblLog = new Messenger().lblLog
+
 exports.dd = new Messenger().dd
 exports.dump = new Messenger().dump
 exports.terminalInfo = new Messenger().terminalInfo

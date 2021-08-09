@@ -2,6 +2,11 @@ const Messenger = require('../src/messenger')
 const strpad = require('strpad')
 const { critical } = require('../src/messenger')
 
+const titleCase = str => {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
+}
 // Messenger.clear()
 
 // Messenger.critical('test')
@@ -23,17 +28,24 @@ let methods = [
   'status',
   'success',
   'warn',
-  'warning',
+  'warning'
 ]
 
 // let colors = Messenger.messageColors('critical')
 // console.log(colors)
 
-methods.forEach((method) => {
+console.log('')
+
+methods.forEach(method => {
   let colors = Messenger.messageColors(method)
-  console.log(colors)
+  console.log('')
   let header = `\u001b[${colors.fg}` + method.toLocaleUpperCase() + '\u001b[39m'
   Messenger.center(` ${header} `, `\u001b[${colors.fg}*\u001b[39m`)
+  let colorLabel = `\u001b[${colors.fg}` + method + ' colors:' + '\u001b[39m'
+
+  console.log('')
+  colorLabel = Messenger['lbl' + titleCase(method)](`${(method + ' colors').toLocaleUpperCase()}`)
+  console.log(colorLabel, colors)
   console.log('')
   Messenger[method](obj, 'OBJECT')
   console.log('')
