@@ -2,6 +2,9 @@ const colors = require('chalk')
 const Messenger = require('../src/messenger')
 Messenger.initLogger(true, 'logs', 'messenger')
 
+const stripAnsi = require('strip-ansi')
+const { default: chalk } = require('chalk')
+
 const titleCase = str => {
   return str.replace(/\w\S*/g, function(txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
@@ -42,7 +45,8 @@ commands.forEach(command => {
 
   let lbl = 'lbl' + titleCase(command)
   let test = Messenger[lbl](`${command} label`.toLocaleUpperCase())
-  console.log(test + ' <== Formatted Label Only')
+
+  console.log(test + ' <== Formatted Label Only (default color intentional)')
 
   console.log('')
 })

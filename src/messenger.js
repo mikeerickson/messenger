@@ -519,7 +519,7 @@ class Messenger {
 
     msg = utils.formatMessage(msg)
 
-    let output = `${colors.bgBlue.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
+    let output = `${colors.bgCyan.black(label)}${label ? ' ' : ''}${colors.cyan(icon + msg)}`
 
     print(output)
     if (this !== undefined) {
@@ -530,7 +530,7 @@ class Messenger {
   }
 
   lblInfo(label = '') {
-    return colors.bgBlue.black(` ${label} `)
+    return colors.bgCyan.black(` ${label} `)
   }
 
   /**
